@@ -1,0 +1,511 @@
+/* ==========================================================================
+   OMNI ECOSYSTEM — ULTRA-LUXURY 3D LIQUID GLASS DESIGN SYSTEM & GEMINI VECTORS
+   ========================================================================== */
+
+:root {
+  --liquid-glass-bg: linear-gradient(135deg, rgba(13, 19, 36, 0.72) 0%, rgba(20, 30, 56, 0.52) 50%, rgba(13, 19, 36, 0.76) 100%);
+  --liquid-glass-bg-hover: linear-gradient(135deg, rgba(16, 24, 46, 0.82) 0%, rgba(26, 38, 70, 0.62) 50%, rgba(16, 24, 46, 0.86) 100%);
+  --liquid-glass-subtle: rgba(15, 23, 42, 0.55);
+  --liquid-glass-border: rgba(0, 229, 255, 0.22);
+  --liquid-glass-border-hover: rgba(0, 229, 255, 0.48);
+  --liquid-glass-border-specular: inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  --liquid-glass-glow: 0 0 24px rgba(0, 229, 255, 0.12);
+  --liquid-glass-glow-hover: 0 0 36px rgba(0, 229, 255, 0.24);
+  --liquid-glass-shadow: 0 16px 44px rgba(0, 0, 0, 0.55);
+  
+  --gemini-cyan: #00e5ff;
+  --gemini-cyan-glow: rgba(0, 229, 255, 0.4);
+  --gemini-purple: #a855f7;
+  --gemini-purple-glow: rgba(168, 85, 247, 0.4);
+  --gemini-gold: #ffd700;
+  --gemini-gold-glow: rgba(255, 215, 0, 0.4);
+  --gemini-pink: #f43f5e;
+  --gemini-pink-glow: rgba(244, 63, 94, 0.4);
+  --gemini-green: #10b981;
+  --gemini-green-glow: rgba(16, 185, 129, 0.4);
+  --gemini-blue: #3b82f6;
+
+  --font-mono: 'Share Tech Mono', 'SF Mono', monospace;
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-gemini: 'Plus Jakarta Sans', 'Outfit', 'Google Sans', system-ui, sans-serif;
+  --font-gemini-display: 'Space Grotesk', 'Outfit', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   1. MASTER LIQUID GLASS LAYOUTS, PANELS & CARDS
+   -------------------------------------------------------------------------- */
+
+.liquid-glass-card,
+.weex-card-box,
+.weex-pillar-card,
+.weex-hero-header,
+.weex-stat-chip,
+.weex-pay-card,
+.gamified-panel,
+.glass-panel,
+.metric-card,
+.modal-card.liquid-glass-card,
+.buy-crypto-form-card,
+.buy-crypto-summary-card,
+.dep-box-card,
+.withdraw-form-card,
+.transfer-form-card,
+.ow-holdings-box,
+.p2p-table-card,
+.dep-records-card,
+.with-records-card,
+.multi-wallet-hub-card,
+.cnow-active-box {
+  background: var(--liquid-glass-bg) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+  border: 1px solid var(--liquid-glass-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--liquid-glass-shadow), var(--liquid-glass-border-specular), var(--liquid-glass-glow) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle iridescent specular top sheen highlight */
+.liquid-glass-card::before,
+.weex-card-box::before,
+.weex-hero-header::before,
+.weex-pillar-card::before,
+.buy-crypto-form-card::before,
+.buy-crypto-summary-card::before,
+.dep-box-card::before,
+.withdraw-form-card::before,
+.transfer-form-card::before,
+.ow-holdings-box::before,
+.p2p-table-card::before,
+.dep-records-card::before,
+.with-records-card::before,
+.multi-wallet-hub-card::before,
+.modal-card.liquid-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.35) 25%, rgba(0, 229, 255, 0.65) 50%, rgba(168, 85, 247, 0.35) 75%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Interactive Hover States */
+.liquid-glass-card:hover,
+.weex-card-box:hover,
+.weex-pillar-card:hover,
+.gamified-panel:hover,
+.glass-panel:hover,
+.buy-crypto-form-card:hover,
+.buy-crypto-summary-card:hover,
+.dep-box-card:hover,
+.withdraw-form-card:hover,
+.transfer-form-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--liquid-glass-border-hover) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.3), var(--liquid-glass-glow-hover) !important;
+}
+
+/* Featured pillar highlight with Gemini Aura */
+.weex-pillar-card.featured {
+  border-color: rgba(0, 229, 255, 0.4) !important;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 0 28px rgba(0, 229, 255, 0.18) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. TRADING WORKSTATION LIQUID GLASS PANELS
+   -------------------------------------------------------------------------- */
+
+.ticker-bar {
+  background: rgba(10, 15, 30, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  position: relative;
+  z-index: 10;
+}
+
+.ticker-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.45) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+.chart-section,
+.orderbook-section,
+.order-form-section,
+.positions-section,
+.bottom-dock {
+  background: rgba(10, 15, 28, 0.76) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.18) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  position: relative;
+}
+
+.market-explorer-drawer {
+  background: rgba(10, 15, 32, 0.94) !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. LIQUID GLASS INPUT BOXES & CONTROLS
+   -------------------------------------------------------------------------- */
+
+.weex-input-box,
+.weex-currency-selector,
+.buy-input-row,
+.amount-input-wrap,
+.buy-currency-select,
+.amount-input-wrap input {
+  background: rgba(10, 15, 29, 0.75) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 229, 255, 0.05) !important;
+  transition: all 0.25s ease !important;
+}
+
+.weex-input-box:focus-within,
+.buy-input-row:focus-within,
+.amount-input-wrap:focus-within {
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.35), inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+.weex-preset-chip,
+.pct-btn,
+.dest-option-card,
+.pay-method-card,
+.tf-account-box {
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+.dest-option-card.active,
+.pay-method-card.active,
+.pct-btn.active {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18) 0%, rgba(168, 85, 247, 0.2) 100%) !important;
+  border-color: #00e5ff !important;
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.weex-preset-chip:hover,
+.pct-btn:hover,
+.dest-option-card:hover,
+.pay-method-card:hover {
+  background: rgba(0, 229, 255, 0.15) !important;
+  border-color: #00e5ff !important;
+  color: #00e5ff !important;
+  box-shadow: 0 4px 12px rgba(0, 229, 255, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. LIQUID GLASS PILLS & NAVIGATION BARS
+   -------------------------------------------------------------------------- */
+
+.weex-subnav-pills,
+.tx-filter-pills,
+.orderbook-tabs,
+.pos-tabs,
+.ob-mode-switch {
+  background: rgba(10, 15, 30, 0.72) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.18) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.weex-subnav-btn.active,
+.tx-pill.active,
+.ob-tab.active,
+.pos-tab.active {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.22) 0%, rgba(168, 85, 247, 0.25) 100%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.45) !important;
+  color: #00e5ff !important;
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. LIQUID GLASS DATA TABLES
+   -------------------------------------------------------------------------- */
+
+.weex-table-wrap,
+.table-responsive {
+  background: transparent !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+}
+
+.weex-data-table,
+.desk-table,
+.ow-table,
+.p2p-merchants-table,
+.p2p-orders-table,
+.dep-records-table,
+.with-records-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.weex-data-table thead tr,
+.desk-table thead tr,
+.ow-table thead tr,
+.p2p-merchants-table thead tr,
+.p2p-orders-table thead tr,
+.dep-records-table thead tr,
+.with-records-table thead tr {
+  background: rgba(10, 15, 29, 0.85) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important;
+}
+
+.weex-data-table th,
+.desk-table th,
+.ow-table th,
+.p2p-merchants-table th,
+.p2p-orders-table th,
+.dep-records-table th,
+.with-records-table th {
+  padding: 14px 16px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.weex-data-table tbody tr,
+.desk-table tbody tr,
+.ow-table tbody tr,
+.p2p-merchants-table tbody tr,
+.p2p-orders-table tbody tr,
+.dep-records-table tbody tr,
+.with-records-table tbody tr {
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.weex-data-table tbody tr:hover,
+.desk-table tbody tr:hover,
+.ow-table tbody tr:hover,
+.p2p-merchants-table tbody tr:hover,
+.p2p-orders-table tbody tr:hover,
+.dep-records-table tbody tr:hover,
+.with-records-table tbody tr:hover {
+  background: rgba(0, 229, 255, 0.06) !important;
+}
+
+.weex-data-table td,
+.desk-table td,
+.ow-table td,
+.p2p-merchants-table td,
+.p2p-orders-table td,
+.dep-records-table td,
+.with-records-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* --------------------------------------------------------------------------
+   6. GEMINI VECTOR SUITE & GRADIENT ENGINES
+   -------------------------------------------------------------------------- */
+
+.gemini-symbol {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* Gemini Gradients */
+.gemini-grad-cyan {
+  color: #00e5ff !important;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.6)) !important;
+}
+
+.gemini-grad-gold {
+  color: #ffd700 !important;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6)) !important;
+}
+
+.gemini-grad-pink {
+  color: #f43f5e !important;
+  filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.6)) !important;
+}
+
+.gemini-grad-purple {
+  color: #a855f7 !important;
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6)) !important;
+}
+
+.gemini-grad-green {
+  color: #10b981 !important;
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6)) !important;
+}
+
+.gemini-grad-rainbow {
+  background: linear-gradient(135deg, #00e5ff 0%, #a855f7 50%, #ffd700 100%);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.5));
+}
+
+/* Gemini Sparkle Vector Animation */
+@keyframes geminiSparkleGlow {
+  0% {
+    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.5)) drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.8)) drop-shadow(0 0 18px rgba(168, 85, 247, 0.5));
+    transform: scale(1.06);
+  }
+  100% {
+    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.5)) drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
+    transform: scale(1);
+  }
+}
+
+.gemini-sparkle-icon {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  animation: geminiSparkleGlow 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+.gemini-sparkle-mini {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  display: inline-block;
+  filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.6));
+}
+
+/* Gemini Vector Coin Badges */
+.gemini-token-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: rgba(10, 15, 29, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  font-weight: 800;
+  font-size: 11px;
+}
+
+.gemini-token-icon-badge.gemini-grad-cyan {
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+}
+
+.gemini-token-icon-badge.gemini-grad-gold {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+}
+
+.gemini-token-icon-badge.gemini-grad-purple {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.25);
+}
+
+.gemini-token-icon-badge.gemini-grad-pink {
+  border-color: rgba(244, 63, 94, 0.5);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.25);
+}
+
+.gemini-token-icon-badge.gemini-grad-green {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+}
+
+.gemini-token-icon-badge.gemini-grad-rainbow {
+  border-color: rgba(0, 229, 255, 0.6);
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   7. LIQUID GLASS MODALS & SHEETS
+   -------------------------------------------------------------------------- */
+
+.modal-overlay {
+  background: rgba(3, 7, 18, 0.75) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+}
+
+.modal-card.liquid-glass-card {
+  background: linear-gradient(135deg, rgba(13, 19, 36, 0.88) 0%, rgba(22, 32, 60, 0.72) 100%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 0 40px rgba(0, 229, 255, 0.2) !important;
+  border-radius: 20px !important;
+}
+
+.biometric-sheet-card {
+  background: linear-gradient(135deg, rgba(13, 19, 36, 0.92) 0%, rgba(20, 30, 56, 0.82) 100%) !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  border-radius: 24px !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. LIQUID GLASS QR WORKSTATION
+   -------------------------------------------------------------------------- */
+
+.weex-qr-box,
+.qr-deposit-box {
+  background: rgba(10, 15, 28, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 20px rgba(0, 229, 255, 0.1) !important;
+  display: inline-block !important;
+}
+
+.weex-qr-box svg,
+.qr-deposit-box svg {
+  border-radius: 10px;
+}
