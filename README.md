@@ -124,7 +124,7 @@ Omni Futures is a core pillar of the interconnected **Omni Ecosystem**, a high-t
 | 11 | **OmniPresences** | 3D Digital Earth Geospatial Visualization & Satellites | [omni-presences-39821.web.app](https://omni-presences-39821.web.app) | [`X3DevBlake/omni-presences`](https://github.com/X3DevBlake/omni-presences) |
 | 12 | **Omni Season Pass** | 500-Tier Gamified Web3 Battle Pass & Quest System | [omni-llm-39821.web.app/season-pass.html](https://omni-llm-39821.web.app/season-pass.html) | [`X3DevBlake/omni-season-pass`](https://github.com/X3DevBlake/omni-season-pass) |
 | 13 | **Omni Landscaping** | Procedural 3D Voxel Sandbox & Terrain Worldbuilder | [omni-network-39821.web.app/omnilandscapes](https://omni-network-39821.web.app/omnilandscapes) | [`X3DevBlake/omni-landscaping`](https://github.com/X3DevBlake/omni-landscaping) |
-| 14 | **Omni Showcase** | Master Ecosystem Directory & Visual Gallery | [omni-ecosystem-39821.web.app](https://omni-ecosystem-39821.web.app) | [`X3DevBlake/omni-ecosystem-showcase`](https://github.com/X3DevBlake/omni-ecosystem-showcase) |
+| 14 | **Omni Showcase** | Master Ecosystem Directory & Visual Gallery | [github.com/X3DevBlake/omni-ecosystem-showcase](https://github.com/X3DevBlake/omni-ecosystem-showcase) | [`X3DevBlake/omni-ecosystem-showcase`](https://github.com/X3DevBlake/omni-ecosystem-showcase) |
 
 ---
 
@@ -305,4 +305,4 @@ Omni Futures and all interconnected platforms in the Omni Ecosystem are deployed
 | **OmniPresences** | [https://omni-presences-39821.web.app](https://omni-presences-39821.web.app) | 3D Digital Earth Geospatial Visualization |
 | **Omni Season Pass** | [https://omni-llm-39821.web.app/season-pass.html](https://omni-llm-39821.web.app/season-pass.html) | 500-Tier Gamified Web3 Battle Pass & Quests |
 | **Omni Landscaping** | [https://omni-network-39821.web.app/omnilandscapes](https://omni-network-39821.web.app/omnilandscapes) | Procedural 3D Voxel Sandbox Worldbuilder |
-| **Omni Showcase** | [https://omni-ecosystem-39821.web.app](https://omni-ecosystem-39821.web.app) | Master Visual Directory & Ecosystem Portal |
+| **Omni Showcase** | [https://github.com/X3DevBlake/omni-ecosystem-showcase](https://github.com/X3DevBlake/omni-ecosystem-showcase) | Master Visual Directory & Ecosystem Portal |
