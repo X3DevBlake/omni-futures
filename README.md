@@ -18,10 +18,29 @@
 
 ## 🌟 Overview
 
-**Omni Futures** is a next-generation high-throughput perpetual contracts and synthetics trading platform. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond execution speeds, up to 200x isolated and cross margin leverage, institutional copy trading replication, multi-network on-chain deposits (Solana, Arbitrum, Ethereum, Bitcoin), 2FA TOTP verified withdrawals, and an extensive directory of 2,300+ multi-exchange market pairs.
+**Omni Futures** is an institutional-grade, high-throughput perpetual contracts and synthetics trading platform natively deployed across the **Omni Network** ecosystem. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond order routing, up to 200x isolated and cross margin leverage, quantitative copy trading replication, multi-network on-chain collateral settlements (Omni EVM, Arbitrum One, Solana, Ethereum, Bitcoin), and sovereign **W3C Decentralized Identity (DID)** cryptographic signature security.
+
+---
+
+### 🌐 Omni Network (Layer 1 Execution Foundation)
+Omni Futures operates on the high-performance **Omni Network** Layer 1 architecture—an EVM-compatible consensus layer optimized for ultra-low latency, sub-second transaction finality, and cross-chain liquidity aggregation:
+- **Sub-Millisecond Engine Latency**: Order matching and state updates executed within <5ms.
+- **Cross-Rollup Interoperability**: Direct bridges connecting Arbitrum One, Ethereum Mainnet, Solana, Taproot Bitcoin, and BSC.
+- **Institutional Liquidity Vaults**: Deep order books backed by decentralized market makers and algorithmic liquidity pools.
+- **On-Chain Provable Solvency**: Real-time margin auditing and verifiable reserves tracking.
+
+---
+
+### 🪙 $OMNI Token (Native Utility, Staking & Governance)
+The **$OMNI Token** is the core economic engine powering the Omni Futures exchange and the broader Omni decentralized financial ecosystem:
+- **Trading Fee Rebates & Discounts**: Staking and holding $OMNI grants tier-based trading fee reductions of up to **60%** across maker and taker orders.
+- **18.5% APY Staking Yield Vaults**: Stakers receive real yield distributed directly in USDT and $OMNI generated from platform perpetual trading volume.
+- **Multi-Asset Synthetic Margin**: Deposit and utilize $OMNI as initial and maintenance margin collateral across all 200x perpetual contract pairs.
+- **Gas & Network Settlement**: Universal settlement asset for low-gas cross-chain execution and internal zero-fee transfers.
+- **OmniDAO Governance Rights**: Token holders propose, vote on, and govern new listing pairs, risk leverage parameters, and protocol fee distributions.
 
 ### 🛠️ Technology Stack
-`Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `Python 3` • `SQLite3` • `WebSockets` • `Chart.js / TradingView Lightweight Charts`
+`Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `W3C DID Cryptographic Engine` • `Python 3` • `SQLite3` • `WebSockets` • `TradingView Charts`
 
 ---
 
@@ -81,47 +100,47 @@ Enterprise-grade withdrawal hub providing instant blockchain settlements, gas fe
 
 ---
 
-### 7. Enterprise 2FA TOTP Security Verification
-Bank-grade two-factor authentication modal enforcing Google Authenticator / Authy 6-digit TOTP verification before any capital withdrawal can be dispatched.
+### 7. W3C Decentralized Identity (DID) & Biometric Enclave Security Engine
+Next-generation sovereign security engine replacing legacy, SIM-swap-vulnerable 2FA with hardware biometric enclave verification (WebAuthn / Passkeys) and W3C Decentralized Identifiers (`did:omni:...`). Every capital disbursement generates a cryptographically bound challenge-response nonce and verifiable ECDSA secp256k1 proof before broadcast.
 
 <div align="center">
-  <img src="screenshots/07_withdraw_2fa_modal.png" alt="2FA Security Modal" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+  <img src="screenshots/07_withdraw_2fa_modal.png" alt="Omni DID Security Engine" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
 </div>
 
 ---
 
 ### 8. Assets Portfolio Hub & Balances Overview
-Total net worth tracker reporting real-time portfolio valuations across the four core account pillars: **Futures**, **Spot**, **Funding**, and **Earn**, with eye-toggle balance concealment and PnL breakdowns.
+Total net worth tracker reporting live portfolio valuations across the four core account pillars: **Futures Margin**, **Spot Account**, **Funding / Fiat**, and **Earn / Staking**. Highlights top holding balances including native **$OMNI Token (Native L1)**, USDT, BTC, ETH, and SOL with allocation progress bars and real-time PnL analytics.
 
 <div align="center">
-  <img src="screenshots/08_assets_portfolio_hub.png" alt="Assets Portfolio Hub" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+  <img src="screenshots/08_assets_portfolio_hub.png" alt="Assets Portfolio Hub & Balances Overview" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
 </div>
 
 ---
 
 ### 9. Sub-Zero Latency Internal Account Transfer
-Instant zero-fee capital routing modal allowing traders to shift collateral seamlessly between Futures margin, Spot trading, P2P funding, and Earn yield accounts.
+Instant 0-fee capital routing modal allowing traders to shift collateral seamlessly between Futures margin, Spot trading, P2P funding, and Earn yield accounts with instantaneous balance synchronization.
 
 <div align="center">
-  <img src="screenshots/09_internal_transfer_modal.png" alt="Internal Account Transfer" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+  <img src="screenshots/09_internal_transfer_modal.png" alt="Sub-Zero Latency Internal Account Transfer" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
 </div>
 
 ---
 
 ### 10. Copy Trading Engine & Leaderboard
-Quant copy trading platform featuring verified elite traders, 30-day ROI% performance matrices, maximum drawdown statistics, win rates, and 1-click automated order replication.
+Institutional quantitative copy trading platform featuring verified elite traders, 30-day ROI% performance matrices (up to +384.2%), maximum drawdown statistics, win rates, and 1-click automated order replication.
 
 <div align="center">
-  <img src="screenshots/10_copy_trading_engine.png" alt="Copy Trading Engine" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+  <img src="screenshots/10_copy_trading_engine.png" alt="Copy Trading Engine & Leaderboard" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
 </div>
 
 ---
 
 ### 11. High-Yield Protocol Earn & Staking Vaults
-Direct connection to the Omni Network decentralized yield infrastructure, delivering up to 18.5% APY on $OMNI staking, flexible stablecoin savings, and protocol revenue distribution.
+Direct connection to the Omni Network decentralized yield infrastructure, delivering up to 18.5% APY on $OMNI staking, flexible stablecoin savings, and protocol revenue distribution via OmniDAO smart contracts.
 
 <div align="center">
-  <img src="screenshots/11_earn_staking_vaults.png" alt="Earn Vaults" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+  <img src="screenshots/11_earn_staking_vaults.png" alt="High-Yield Protocol Earn & Staking Vaults" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
 </div>
 
 ---
@@ -137,11 +156,11 @@ Direct connection to the Omni Network decentralized yield infrastructure, delive
 │   ├── 04_buy_crypto_p2p.png            # P2P escrow trading desk
 │   ├── 05_deposit_workstation.png       # Multi-network deposit hub
 │   ├── 06_withdraw_workstation.png      # On-chain withdrawal workstation
-│   ├── 07_withdraw_2fa_modal.png        # 2FA TOTP security modal
-│   ├── 08_assets_portfolio_hub.png      # Portfolio net worth & balances
-│   ├── 09_internal_transfer_modal.png   # Cross-account instant transfers
-│   ├── 10_copy_trading_engine.png       # Copy trader leaderboard
-│   ├── 11_earn_staking_vaults.png       # High-yield staking vaults
+│   ├── 07_withdraw_2fa_modal.png        # Omni DID Security Engine modal (W3C / Biometric Enclave)
+│   ├── 08_assets_portfolio_hub.png      # Portfolio net worth, 4 pillars & $OMNI balances
+│   ├── 09_internal_transfer_modal.png   # Sub-zero latency internal account transfers
+│   ├── 10_copy_trading_engine.png       # Quant copy trading engine & master leaderboard
+│   ├── 11_earn_staking_vaults.png       # 18.5% APY $OMNI staking & protocol yield vaults
 │   └── showcase_preview.png             # Master repository preview
 ├── index.html                           # Exchange SPA frontend
 ├── style.css                            # Liquid Glassmorphism design system

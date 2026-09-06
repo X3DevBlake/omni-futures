@@ -2858,38 +2858,81 @@
     </div>
   </div>
 
-  <!-- 2. Withdraw 2FA Security Modal -->
+  <!-- 2. Omni DID (Decentralized Identity) Security Engine Modal -->
   <div class="modal-overlay" id="modalWithdraw2FA" style="display:none;" onclick="if(event.target === this) closeWithdraw2FAModal()">
-    <div class="modal-card liquid-glass-card" style="max-width:440px; padding:24px;">
-      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="material-symbols-outlined gemini-symbol gemini-grad-pink" style="font-size:24px;">security</span>
-          <strong style="color:#ffffff; font-size:17px;">2FA Security Verification</strong>
+    <div class="modal-card liquid-glass-card" style="max-width:520px; padding:26px; border:1px solid rgba(0,229,255,0.4); box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,229,255,0.15);">
+      <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg, #00e5ff, #7c3aed); display:flex; align-items:center; justify-content:center; box-shadow:0 0 16px rgba(0,229,255,0.4);">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:22px; color:#ffffff;">fingerprint</span>
+          </div>
+          <div>
+            <strong style="color:#ffffff; font-size:17.5px; letter-spacing:0.3px; display:block;">Omni DID Security Engine</strong>
+            <span style="font-size:11px; color:#00e5ff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">W3C Decentralized Identity & Biometric Enclave</span>
+          </div>
         </div>
         <button class="close-btn" onclick="closeWithdraw2FAModal()"><span class="material-symbols-outlined gemini-symbol" style="font-size:16px;">close</span></button>
       </div>
-      <div class="modal-body" style="padding:0;">
-        <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:16px;">Enter your 6-digit Google Authenticator code to authorize the withdrawal of <strong class="text-cyan" id="twoFaAmountDisplay">500.00 USDT</strong>.</p>
-        
-        <div class="weex-input-field-group">
-          <div class="weex-input-field-label">Google Authenticator Code (2FA)</div>
-          <div class="weex-input-box">
-            <input type="text" id="twoFaInputCode" placeholder="6-digit code (e.g. 582910)" maxlength="6" style="text-align:center; letter-spacing:4px; font-size:18px;" value="894210">
+
+      <div class="modal-body" style="padding:0; display:flex; flex-direction:column; gap:14px;">
+        <!-- DID Identity Badge -->
+        <div style="background:rgba(10,15,29,0.75); padding:12px 14px; border-radius:10px; border:1px solid rgba(0,229,255,0.25); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:10.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Active Decentralized Identifier</div>
+            <div style="font-family:var(--font-gemini-mono); font-size:12.5px; color:#ffffff; font-weight:800; margin-top:2px;" id="didIdentifierDisplay">did:omni:0x88392104E729BF5A</div>
+          </div>
+          <span class="badge" style="background:rgba(16,185,129,0.18); color:#10b981; font-weight:800; font-size:10px; padding:3px 8px; border-radius:6px; border:1px solid rgba(16,185,129,0.35);">
+            ● SECURE ENCLAVE
+          </span>
+        </div>
+
+        <!-- Authorization Target Details -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+          <span style="font-size:12px; color:var(--text-secondary);">Authorization Amount</span>
+          <strong class="text-cyan font-mono" style="font-size:15px;" id="twoFaAmountDisplay">500.00 USDT</strong>
+        </div>
+
+        <!-- Biometric / DID Key Signature Workstation -->
+        <div style="background:linear-gradient(135deg, rgba(0,229,255,0.06), rgba(124,58,237,0.08)); padding:14px; border-radius:12px; border:1px solid rgba(0,229,255,0.3);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-size:12px; font-weight:700; color:#ffffff; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">key</span> Cryptographic Hardware Signature
+            </span>
+            <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-gemini-mono);" id="didChallengeNonceDisplay">Nonce: 0x8f2a...c914</span>
+          </div>
+
+          <button id="btnSignWithDidKey" onclick="triggerDidSignatureVerification()" style="width:100%; padding:12px; border-radius:10px; background:linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%); color:#ffffff; font-weight:800; font-size:13.5px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(0,229,255,0.3); transition:all 0.2s;">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:18px;">fingerprint</span>
+            <span id="btnSignWithDidText">Sign with Omni DID Key (Biometric / Passkey)</span>
+          </button>
+
+          <!-- Dynamic Proof Status -->
+          <div id="didProofStatusContainer" style="margin-top:10px; display:flex; align-items:center; justify-content:space-between; background:rgba(10,15,29,0.8); padding:8px 12px; border-radius:8px; border:1px solid rgba(16,185,129,0.3);">
+            <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; color:#10b981; font-weight:700;">
+              <span class="material-symbols-outlined gemini-symbol" style="font-size:16px;">verified</span>
+              <span id="didSignatureStatusText">DID Signature: Valid & Cryptographically Bound</span>
+            </div>
+            <span class="font-mono" style="font-size:10.5px; color:var(--text-muted);" id="didSigHashShort">0x4a9e...f721</span>
           </div>
         </div>
 
-        <div class="weex-input-field-group">
+        <!-- Fallback DID Recovery Key / Authenticator input -->
+        <div class="weex-input-field-group" style="margin-top:2px;">
           <div class="weex-input-field-label">
-            <span>Email Verification Code</span>
-            <span class="text-cyan" style="cursor:pointer;" id="twoFaSendCodeBtn" onclick="sendSimulatedEmailCode()">Send Code</span>
+            <span>Fallback DID Authenticator / Backup Code</span>
+            <span class="text-cyan" style="cursor:pointer;" id="twoFaSendCodeBtn" onclick="sendSimulatedEmailCode()">Request Encrypted OTP</span>
           </div>
           <div class="weex-input-box">
-            <input type="text" id="twoFaEmailInputCode" placeholder="6-digit email code" maxlength="6" style="text-align:center; letter-spacing:4px; font-size:18px;" value="123456">
+            <input type="text" id="twoFaInputCode" placeholder="6-digit DID Authenticator backup code" maxlength="6" style="text-align:center; letter-spacing:4px; font-size:16px; font-family:var(--font-gemini-mono);" value="894210">
           </div>
+          <!-- Hidden compatibility fields -->
+          <input type="hidden" id="twoFaEmailInputCode" value="123456">
+          <input type="hidden" id="didProofSignatureFull" value="0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b">
         </div>
 
-        <button class="btn" onclick="executeVerifiedWithdrawal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #f43f5e 0%, #db2777 100%); color:#ffffff; border:none; cursor:pointer; margin-top:8px;">
-          Authorize & Broadcast Withdrawal
+        <!-- Broadcast Button -->
+        <button class="btn" onclick="executeVerifiedWithdrawal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #00e5ff 0%, #0284c7 100%); color:#070b14; border:none; cursor:pointer; margin-top:4px; box-shadow:0 4px 20px rgba(0,229,255,0.4);">
+          Authorize & Broadcast via Omni DID Proof
         </button>
       </div>
     </div>
