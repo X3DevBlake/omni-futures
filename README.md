@@ -10,7 +10,13 @@
     <img src="https://img.shields.io/badge/🌐%20Launch%20Live%20Application-omni--futures--39821.web.app-00e5ff?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Launch App" />
   </a>
   <a href="https://omni-network-39821.web.app" target="_blank">
-    <img src="https://img.shields.io/badge/🏛️%20Omni%20Ecosystem-Mainnet-a855f7?style=for-the-badge" alt="Omni Ecosystem" />
+    <img src="https://img.shields.io/badge/🏛️%20Omni%20Network-Mainnet-a855f7?style=for-the-badge" alt="Omni Network" />
+  </a>
+  <a href="https://omni-dao-39821.web.app" target="_blank">
+    <img src="https://img.shields.io/badge/🏛️%20Omni%20DAO-Staking%20%26%20DEX-10b981?style=for-the-badge" alt="Omni DAO" />
+  </a>
+  <a href="https://omni-ecosystem-39821.web.app" target="_blank">
+    <img src="https://img.shields.io/badge/🌌%20Omni%20Ecosystem-Master%20Showcase-ffd700?style=for-the-badge" alt="Omni Ecosystem" />
   </a>
 </div>
 
@@ -96,6 +102,29 @@ The **$OMNI Token** is the core economic engine powering the Omni Futures exchan
 
 ### 🛠️ Technology Stack
 `Gemini Live (gemini-3.1-flash-live / gemini-3.8-flash)` • `Google Cloud Vertex AI` • `Web Audio API (16kHz / 24kHz PCM)` • `Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `W3C DID Cryptographic Engine` • `Python 3` • `SQLite3` • `WebSockets` • `TradingView Charts`
+
+---
+
+## 🌌 Omni Ecosystem — Live Web Applications Directory
+
+Omni Futures is a core pillar of the interconnected **Omni Ecosystem**, a high-throughput network of 14 live decentralized applications, L1 blockchain consensus, WebGL 3D virtual worlds, and multimodal artificial intelligence engines:
+
+| # | Application | Category & Core Functionality | Live Web Application | Source Repository |
+| :-: | :--- | :--- | :--- | :--- |
+| 1 | **Omni Futures** | Institutional Derivatives & 200x Perpetuals Exchange | [omni-futures-39821.web.app](https://omni-futures-39821.web.app) | [`X3DevBlake/omni-futures`](https://github.com/X3DevBlake/omni-futures) |
+| 2 | **Omni DAO** | Governance, 18.5% APY Staking Vaults & AMM DEX | [omni-dao-39821.web.app](https://omni-dao-39821.web.app) | [`X3DevBlake/omni-dao`](https://github.com/X3DevBlake/omni-dao) |
+| 3 | **Omni Network** | Layer 1 PoUNW Blockchain Consensus & Web Miner V3 | [omni-network-39821.web.app](https://omni-network-39821.web.app) | [`X3DevBlake/omni-network`](https://github.com/X3DevBlake/omni-network) |
+| 4 | **Omni Explorer** | Real-Time Block Explorer & Validator Node Telemetry | [omni-explorer-39821.web.app](https://omni-explorer-39821.web.app) | [`X3DevBlake/omni-explorer`](https://github.com/X3DevBlake/omni-explorer) |
+| 5 | **Omni LLM Studio** | Autonomous AI Assistant Hub & Multi-Agent Network | [omni-llm-39821.web.app](https://omni-llm-39821.web.app) | [`X3DevBlake/omni-llm`](https://github.com/X3DevBlake/omni-llm) |
+| 6 | **Omni Brain** | Distributed Supercomputer & AI Shard Neural Engine | [omni-brain-39821.web.app](https://omni-brain-39821.web.app) | [`X3DevBlake/omni-brain`](https://github.com/X3DevBlake/omni-brain) |
+| 7 | **Omni Kronos** | 3D Game Engine & WebGL Autonomous Dev Environment | [omni-kronos-39821.web.app](https://omni-kronos-39821.web.app) | [`X3DevBlake/omni-kronos`](https://github.com/X3DevBlake/omni-kronos) |
+| 8 | **OmniAir** | Web3 Social Network & Creator Video Streaming Hub | [omniair-39821.web.app](https://omniair-39821.web.app) | [`X3DevBlake/omniair`](https://github.com/X3DevBlake/omniair) |
+| 9 | **Omni Presale** | Multichain Token Crowdsale & IDO Allocation Engine | [omni-presale-39821.web.app](https://omni-presale-39821.web.app) | [`X3DevBlake/omni-token-presale`](https://github.com/X3DevBlake/omni-token-presale) |
+| 10 | **Omni Airdrop** | Fair-Launch Claim Portal & Community Rewards Drops | [omni-airdrop-39821.web.app](https://omni-airdrop-39821.web.app) | [`X3DevBlake/omni-airdrop`](https://github.com/X3DevBlake/omni-airdrop) |
+| 11 | **OmniPresences** | 3D Digital Earth Geospatial Visualization & Satellites | [omni-presences-39821.web.app](https://omni-presences-39821.web.app) | [`X3DevBlake/omni-presences`](https://github.com/X3DevBlake/omni-presences) |
+| 12 | **Omni Season Pass** | 500-Tier Gamified Web3 Battle Pass & Quest System | [omni-llm-39821.web.app/season-pass.html](https://omni-llm-39821.web.app/season-pass.html) | [`X3DevBlake/omni-season-pass`](https://github.com/X3DevBlake/omni-season-pass) |
+| 13 | **Omni Landscaping** | Procedural 3D Voxel Sandbox & Terrain Worldbuilder | [omni-network-39821.web.app/omnilandscapes](https://omni-network-39821.web.app/omnilandscapes) | [`X3DevBlake/omni-landscaping`](https://github.com/X3DevBlake/omni-landscaping) |
+| 14 | **Omni Showcase** | Master Ecosystem Directory & Visual Gallery | [omni-ecosystem-39821.web.app](https://omni-ecosystem-39821.web.app) | [`X3DevBlake/omni-ecosystem-showcase`](https://github.com/X3DevBlake/omni-ecosystem-showcase) |
 
 ---
 
@@ -257,8 +286,23 @@ The cutting-edge conversational trading desk powered by **Gemini Live (`gemini-3
 
 ---
 
-## 🌐 Live Production Deployment
+## 🌐 Live Production Deployment & Ecosystem Directory
 
-Omni Futures is deployed live on Google Cloud Firebase Hosting:
-- **Production URL**: [https://omni-futures-39821.web.app](https://omni-futures-39821.web.app)
-- **Ecosystem Hub**: [https://omni-network-39821.web.app](https://omni-network-39821.web.app)
+Omni Futures and all interconnected platforms in the Omni Ecosystem are deployed live on Google Cloud Firebase Hosting:
+
+| Service / Portal | Production Website URL | Description |
+| :--- | :--- | :--- |
+| **Omni Futures** | [https://omni-futures-39821.web.app](https://omni-futures-39821.web.app) | 200x Perpetuals, Gemini Live AI & Spot Exchange |
+| **Omni DAO** | [https://omni-dao-39821.web.app](https://omni-dao-39821.web.app) | Governance, 18.5% APY Staking Vaults & AMM DEX |
+| **Omni Network** | [https://omni-network-39821.web.app](https://omni-network-39821.web.app) | L1 Consensus Mainnet, Telemetry & Web Miner V3 |
+| **Omni Explorer** | [https://omni-explorer-39821.web.app](https://omni-explorer-39821.web.app) | Real-Time Block Explorer & Validator Metrics |
+| **Omni LLM** | [https://omni-llm-39821.web.app](https://omni-llm-39821.web.app) | Autonomous AI Multi-Agent Intelligence Hub |
+| **Omni Brain** | [https://omni-brain-39821.web.app](https://omni-brain-39821.web.app) | Distributed Supercomputer & AI Shard Weights |
+| **Omni Kronos** | [https://omni-kronos-39821.web.app](https://omni-kronos-39821.web.app) | Autonomous 3D Game Engine & WebGL ADE |
+| **OmniAir** | [https://omniair-39821.web.app](https://omniair-39821.web.app) | Web3 Social Network & Creator Video Streaming |
+| **Omni Presale** | [https://omni-presale-39821.web.app](https://omni-presale-39821.web.app) | Multichain Token Crowdsale & Allocation Engine |
+| **Omni Airdrop** | [https://omni-airdrop-39821.web.app](https://omni-airdrop-39821.web.app) | Community Rewards Claim Portal & Sybil Filter |
+| **OmniPresences** | [https://omni-presences-39821.web.app](https://omni-presences-39821.web.app) | 3D Digital Earth Geospatial Visualization |
+| **Omni Season Pass** | [https://omni-llm-39821.web.app/season-pass.html](https://omni-llm-39821.web.app/season-pass.html) | 500-Tier Gamified Web3 Battle Pass & Quests |
+| **Omni Landscaping** | [https://omni-network-39821.web.app/omnilandscapes](https://omni-network-39821.web.app/omnilandscapes) | Procedural 3D Voxel Sandbox Worldbuilder |
+| **Omni Showcase** | [https://omni-ecosystem-39821.web.app](https://omni-ecosystem-39821.web.app) | Master Visual Directory & Ecosystem Portal |
