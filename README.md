@@ -1,6 +1,6 @@
 # Omni Futures
 
-> Institutional-Grade Derivatives & Spot Synthetics Exchange
+> Institutional-Grade Derivatives & Spot Exchange
 
 ![Status](https://img.shields.io/badge/Status-Live%20Production-00e5ff?style=for-the-badge) ![Ecosystem](https://img.shields.io/badge/Ecosystem-Omni%20Network-a855f7?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-ffd700?style=for-the-badge)
 
@@ -18,7 +18,7 @@
 
 ## 🌟 Overview
 
-**Omni Futures** is an institutional-grade, high-throughput perpetual contracts and synthetics trading platform natively deployed across the **Omni Network** ecosystem. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond order routing, up to 200x isolated and cross margin leverage, quantitative copy trading replication, multi-network on-chain collateral settlements (Omni EVM, Arbitrum One, Solana, Ethereum, Bitcoin), and sovereign **W3C Decentralized Identity (DID)** cryptographic signature security.
+**Omni Futures** is an institutional-grade, high-throughput perpetual contracts and spot trading platform natively deployed across the **Omni Network** ecosystem. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond order routing, up to 200x isolated and cross margin leverage, quantitative copy trading replication, multi-network on-chain collateral settlements (Omni EVM, Arbitrum One, Solana, Ethereum, Bitcoin), and sovereign **W3C Decentralized Identity (DID)** cryptographic signature security.
 
 ---
 
@@ -35,7 +35,7 @@ Omni Futures operates on the high-performance **Omni Network** Layer 1 architect
 The **$OMNI Token** is the core economic engine powering the Omni Futures exchange and the broader Omni decentralized financial ecosystem:
 - **Trading Fee Rebates & Discounts**: Staking and holding $OMNI grants tier-based trading fee reductions of up to **60%** across maker and taker orders.
 - **18.5% APY Staking Yield Vaults**: Stakers receive real yield distributed directly in USDT and $OMNI generated from platform perpetual trading volume.
-- **Multi-Asset Synthetic Margin**: Deposit and utilize $OMNI as initial and maintenance margin collateral across all 200x perpetual contract pairs.
+- **Multi-Asset Margin Collateral**: Deposit and utilize $OMNI as initial and maintenance margin collateral across all 200x perpetual contract pairs.
 - **Gas & Network Settlement**: Universal settlement asset for low-gas cross-chain execution and internal zero-fee transfers.
 - **OmniDAO Governance Rights**: Token holders propose, vote on, and govern new listing pairs, risk leverage parameters, and protocol fee distributions.
 
@@ -56,7 +56,7 @@ The flagship workstation featuring real-time interactive candlestick charts, str
 ---
 
 ### 2. Comprehensive Markets Directory
-Explore and filter over 2,300 multi-exchange synthetic pairs, categorized into Top Gainers, Losers, High Volume, Stocks, ETFs, and Memecoins, accompanied by 24-hour volume stats and authentic SVG badges.
+Explore and filter over 2,300 multi-exchange trading pairs, categorized into Top Gainers, Losers, High Volume, Stocks, ETFs, and Memecoins, accompanied by 24-hour volume stats and authentic SVG badges.
 
 <div align="center">
   <img src="screenshots/02_markets_overview.png" alt="Markets Overview" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
