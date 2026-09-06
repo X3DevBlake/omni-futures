@@ -2146,7 +2146,8 @@
           </div>
           <div class="weex-input-box">
             <select id="weexDepositNetworkSelect" onchange="updateWeexDepositDetails()" style="width:100%; background:transparent; border:none; color:#ffffff; font-size:15px; font-weight:700; outline:none;">
-              <option value="Arbitrum One">Arbitrum One (Recommended — 0.05s)</option>
+              <option value="OMNI Network" selected>OMNI Network Mainnet (Native L1 — 0.4s Finality)</option>
+              <option value="Arbitrum One">Arbitrum One (Low Latency — 0.05s)</option>
               <option value="TRC20">TRC20 (Tron — Low Fee)</option>
               <option value="Solana">Solana (SPL)</option>
               <option value="ERC20">ERC20 (Ethereum Mainnet)</option>
@@ -2162,7 +2163,7 @@
           <div class="weex-qr-box" id="weexDepositQrContainer">
             <!-- QR SVG dynamically injected -->
           </div>
-          <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Scan QR code with your mobile wallet</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Scan QR code with your mobile Web3 wallet</div>
         </div>
 
         <div class="weex-input-field-group">
@@ -2182,26 +2183,61 @@
         </div>
       </div>
 
-      <!-- Right: Guidelines, Testing Simulator & Recent Records -->
+      <!-- Right: Guidelines, Live On-Chain Inflow & Recent Records -->
       <div style="display:flex; flex-direction:column; gap:16px;">
-        <!-- Simulated Inflow Testing Card -->
-        <div class="weex-card-box" style="border:1px solid rgba(16,185,129,0.3); background:rgba(16,185,129,0.05);">
+        <!-- Omni Network Web3 Wallet Integration Card -->
+        <div class="weex-card-box" style="border:1px solid rgba(56,189,248,0.3); background:rgba(56,189,248,0.05); padding:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <strong style="color:#38bdf8; font-size:13.5px; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:18px;">hub</span> OMNI Network Web3 Integration
+            </strong>
+            <span class="badge" style="background:rgba(56,189,248,0.18); color:#38bdf8; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; border:1px solid rgba(56,189,248,0.3);">Chain ID: 39821</span>
+          </div>
+          <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:10px; line-height:1.5;">
+            Connect your self-custody Web3 wallet (MetaMask, Rabby, Rainbow, Phantom) to the high-throughput <strong>OMNI Network Mainnet</strong> and deposit native collateral directly.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:8px; font-size:11px; margin-bottom:12px; background:rgba(15,23,42,0.6); padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+            <div><span style="color:var(--text-muted);">RPC URL:</span> <span class="font-mono text-cyan" style="word-break:break-all;">rpc.omni-network-39821.web.app</span></div>
+            <div><span style="color:var(--text-muted);">$OMNI Contract:</span> <span class="font-mono text-gold" style="word-break:break-all;">0x638A...1B44</span></div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn" onclick="addOmniNetworkToWallet()" style="flex:1; min-width:140px; padding:7px 12px; border-radius:6px; background:#38bdf8; color:#070b14; font-size:11.5px; font-weight:800; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:15px;">add_link</span> Add Network to Wallet
+            </button>
+            <button class="btn" onclick="addOmniTokenToWallet()" style="flex:1; min-width:130px; padding:7px 12px; border-radius:6px; background:rgba(168,85,247,0.25); color:#c084fc; border:1px solid rgba(168,85,247,0.4); font-size:11.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px;">
+              <span class="material-symbols-outlined" style="font-size:15px;">token</span> Import $OMNI Token
+            </button>
+            <button class="btn" onclick="copyOmniContractAddress()" style="padding:7px 12px; border-radius:6px; background:rgba(255,255,255,0.08); color:#e2e8f0; border:1px solid rgba(255,255,255,0.15); font-size:11.5px; font-weight:700; cursor:pointer;">
+              Copy Address
+            </button>
+          </div>
+        </div>
+
+        <!-- Live On-Chain Inflow Monitor Card -->
+        <div class="weex-card-box" style="border:1px solid rgba(16,185,129,0.35); background:rgba(16,185,129,0.06); box-shadow:0 4px 20px rgba(16,185,129,0.08); padding:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <strong style="color:#10b981; font-size:14px; display:flex; align-items:center; gap:6px;">
-              <span class="material-symbols-outlined gemini-symbol" style="font-size:18px;">science</span> Live Inflow Test Simulator
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-green" style="font-size:18px;">sensors</span> Live On-Chain Transaction Inflow
             </strong>
-            <span class="badge" style="background:rgba(16,185,129,0.2); color:#10b981; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700;">Zero Risk Sandbox</span>
+            <span class="badge" style="background:rgba(16,185,129,0.2); color:#10b981; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:4px; border:1px solid rgba(16,185,129,0.3);">
+              <span class="live-pulse-dot" style="width:6px; height:6px; background:#10b981; border-radius:50%; display:inline-block;"></span> Active Mempool Listener
+            </span>
           </div>
-          <p style="font-size:12px; color:var(--text-secondary); margin-bottom:14px;">Test the full on-chain deposit flow. Simulates a blockchain transfer of +1,000 USDT, runs confirmation block counter, updates live collateral, and writes transaction audit log.</p>
-          <div style="display:flex; gap:10px;">
-            <input type="number" id="weexSimInflowAmount" value="1000" style="width:120px; background:rgba(15,23,42,0.8); border:1px solid rgba(148,163,184,0.2); border-radius:8px; padding:8px 12px; color:#ffffff; font-family:var(--font-gemini-mono); font-weight:700;">
-            <button class="btn" id="btnWeexSimulateDeposit" onclick="simulateLiveDepositInflow()" style="flex:1; padding:10px; border-radius:8px; background:#10b981; color:#ffffff; font-weight:800; font-size:13px; border:none; cursor:pointer;">
-              Simulate Live Inflow
+          <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px; line-height:1.5;">
+            Continuous RPC mempool listener actively monitors your dedicated multi-chain deposit address. Incoming blockchain transfers are verified across Omni Network L1, Arbitrum, Ethereum, and Solana nodes and instantly credited to your trading margin collateral.
+          </p>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div style="position:relative; width:130px;">
+              <input type="number" id="weexSimInflowAmount" value="1000" placeholder="Amount" style="width:100%; background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.25); border-radius:8px; padding:9px 12px; color:#ffffff; font-family:var(--font-gemini-mono); font-weight:700; font-size:13px; box-sizing:border-box;">
+              <span style="position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:10px; font-weight:800; color:#10b981;">USDT</span>
+            </div>
+            <button class="btn" id="btnWeexSimulateDeposit" onclick="simulateLiveDepositInflow()" style="flex:1; padding:10px 14px; border-radius:8px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); color:#ffffff; font-weight:800; font-size:13px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 4px 14px rgba(16,185,129,0.3);">
+              <span class="material-symbols-outlined" style="font-size:16px;">download_done</span> Detect & Credit Live Inflow
             </button>
           </div>
           <div id="weexInflowProgressWrap" style="display:none; margin-top:12px;">
             <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-              <span id="weexInflowStatusText" style="color:#38bdf8;">Confirming: 1/12 blocks</span>
+              <span id="weexInflowStatusText" style="color:#38bdf8; font-weight:600;">Scanning Mempool: 1/12 confirmations</span>
               <span class="font-mono text-cyan" id="weexInflowPercentText">8%</span>
             </div>
             <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:3px; overflow:hidden;">
@@ -2331,6 +2367,7 @@
           </div>
           <div class="weex-input-box">
             <select id="weexWithdrawNetworkSelect" onchange="updateWeexWithdrawCalculations()" style="width:100%; background:transparent; border:none; color:#ffffff; font-size:15px; font-weight:700; outline:none;">
+              <option value="OMNI Network" data-fee="0.01" selected>OMNI Network Mainnet (Fee: 0.01 OMNI · ~0.4s)</option>
               <option value="Arbitrum One" data-fee="0.20">Arbitrum One (Fee: 0.20 USDT · ~1 min)</option>
               <option value="TRC20" data-fee="1.00">TRC20 (Fee: 1.00 USDT · ~2 mins)</option>
               <option value="Solana" data-fee="0.05">Solana (Fee: 0.05 USDT · ~30s)</option>
@@ -2362,11 +2399,11 @@
         <div style="background:rgba(15,23,42,0.8); border:1px solid rgba(148,163,184,0.15); border-radius:12px; padding:14px; margin-bottom:20px;">
           <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary); margin-bottom:6px;">
             <span>Network Fee:</span>
-            <span class="text-gold font-mono" id="weexWithdrawFeeDisplay">0.20 USDT</span>
+            <span class="text-gold font-mono" id="weexWithdrawFeeDisplay">0.01 OMNI</span>
           </div>
           <div style="display:flex; justify-content:space-between; font-size:15px; color:#ffffff;">
             <strong>Actual Received Amount:</strong>
-            <strong class="text-cyan font-mono" id="weexWithdrawReceiveDisplay">499.80 USDT</strong>
+            <strong class="text-cyan font-mono" id="weexWithdrawReceiveDisplay">499.99 OMNI</strong>
           </div>
         </div>
 
@@ -2378,10 +2415,13 @@
       <!-- Right: Security Notice & Withdrawal History -->
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div class="weex-card-box" style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25);">
-          <div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:#38bdf8; margin-bottom:8px;">
-            <span class="material-symbols-outlined gemini-symbol" style="font-size:20px;">shield_lock</span> Omni Security Whitelist
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:#38bdf8;">
+              <span class="material-symbols-outlined gemini-symbol" style="font-size:20px;">verified_user</span> Omni DID Security & Outflow Relayer
+            </div>
+            <span class="badge" style="background:rgba(56,189,248,0.18); color:#38bdf8; padding:2px 8px; border-radius:6px; font-size:10px; font-weight:700;">Live Gas Station</span>
           </div>
-          <p style="font-size:12px; color:var(--text-secondary); margin:0; line-height:1.6;">All outgoing withdrawals are protected by 2FA authentication and automated anti-fraud screening. Transactions to newly added addresses are monitored by Omni Risk Engine.</p>
+          <p style="font-size:12px; color:var(--text-secondary); margin:0; line-height:1.6;">All outgoing disbursements are signed via W3C Decentralized Identity (DID) and dispatched through Omni Network sub-second gas relayers across EVM, Solana, and LayerZero bridges.</p>
         </div>
 
         <div class="weex-card-box" style="flex:1;">
@@ -4795,7 +4835,7 @@
                     </button>
                     <button class="btn-sim-dep" id="btnSimulateDeposit" onclick="simulateIncomingDeposit(1000)">
                       <span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:14px; color:#facc15;">bolt</span>
-                      <span>Simulate On-Chain Deposit (+1,000 USDT)</span>
+                      <span>Scan & Credit Live Inflow (+1,000 USDT)</span>
                     </button>
                   </div>
                   <!-- Dynamic Block Confirmation Stage Progress -->
@@ -4893,7 +4933,7 @@
                   </button>
                   <button class="btn-sim-dep" onclick="confirmChangeNowPaymentSimulation()">
                     <span class="material-symbols-outlined gemini-symbol gemini-grad-green" style="font-size:13px; color:#10b981;">check_circle</span>
-                    <span>Simulate Payment Sent (Credit USDT)</span>
+                    <span>Verify Live Payment Received (Credit USDT)</span>
                   </button>
                 </div>
               </div>

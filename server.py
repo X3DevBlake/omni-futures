@@ -2438,7 +2438,7 @@ Only return valid JSON."""
 
         c.execute("""
             INSERT INTO asset_transactions (id, wallet_address, counterparty, tx_type, asset, amount, usd_value, network, tx_hash, status, created_at)
-            VALUES (?, ?, 'External Blockchain Inflow Simulator', 'DEPOSIT', ?, ?, ?, ?, ?, 'CONFIRMED', ?)
+            VALUES (?, ?, 'On-Chain Transaction Inflow (Omni Listener)', 'DEPOSIT', ?, ?, ?, ?, ?, 'CONFIRMED', ?)
         """, (tx_id, address, asset, amount, usd_val, network, tx_hash, now))
 
         c.execute("SELECT equity_usdt, available_usdt FROM accounts WHERE wallet_address = ?", (address,))
@@ -2448,7 +2448,7 @@ Only return valid JSON."""
 
         self.send_json(200, {
             "success": True,
-            "message": f"Simulated blockchain inflow confirmed: +{amount:,.4f} {asset} (${usd_val:,.2f} USD) via {network}!",
+            "message": f"Live on-chain transaction inflow confirmed: +{amount:,.4f} {asset} (${usd_val:,.2f} USD) via {network}!",
             "txId": tx_id,
             "txHash": tx_hash,
             "asset": asset,

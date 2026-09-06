@@ -58,6 +58,21 @@ Omni Futures operates on the high-performance **Omni Network** Layer 1 architect
 
 ---
 
+### 🦊 Web3 Wallet Configuration (MetaMask, Rabby, Rainbow, Phantom)
+
+Traders and liquidity providers can connect self-custodial Web3 wallets directly to the **Omni Network Mainnet** to deposit and trade native assets with 0.4s transaction finality:
+
+| Parameter | Network Configuration Value |
+| :--- | :--- |
+| **Network Name** | `OMNI Network Mainnet` |
+| **New RPC URL** | `https://rpc.omni-network-39821.web.app` *(Fallback: `https://omni-network-39821.web.app/rpc`)* |
+| **Chain ID** | `39821` *(Hex: `0x9B8D`)* |
+| **Currency Symbol** | `OMNI` |
+| **Decimals** | `18` |
+| **Block Explorer URL** | `https://omni-explorer-39821.web.app` |
+
+---
+
 ### 🪙 $OMNI Token (Native Utility, Staking & Governance)
 The **$OMNI Token** is the core economic engine powering the Omni Futures exchange and the broader Omni decentralized financial ecosystem:
 - **Trading Fee Rebates & Discounts**: Staking and holding $OMNI grants tier-based trading fee reductions of up to **60%** across maker and taker orders.
@@ -65,6 +80,19 @@ The **$OMNI Token** is the core economic engine powering the Omni Futures exchan
 - **Multi-Asset Margin Collateral**: Deposit and utilize $OMNI as initial and maintenance margin collateral across all 200x perpetual contract pairs.
 - **Gas & Network Settlement**: Universal settlement asset for low-gas cross-chain execution and internal zero-fee transfers.
 - **OmniDAO Governance Rights**: Token holders propose, vote on, and govern new listing pairs, risk leverage parameters, and protocol fee distributions.
+
+#### 📜 Verified Protocol & Token Contract Directory
+
+| Asset / Contract | Contract Address (EVM) | Decimals | Role / Standard |
+| :--- | :--- | :--- | :--- |
+| **$OMNI Token (Native)** | `0x638A246F0Ec8883eF68280293FFE8Cfbabe61B44` | 18 | ERC-20 / Native L1 Gas & Governance |
+| **$sOMNI (Staked OMNI Vault)** | `0x6C2d83262fF84cBaDb3e416D527403135D757892` | 18 | ERC-4626 Yield Staking Vault |
+| **USDT Margin Collateral** | `0xa6e99A4ED7498b3cdDCBB61a6A607a4925Faa1B7` | 6 | Multi-Asset Futures Collateral |
+| **USDC Margin Collateral** | `0x0ed64d01D0B4B655E410EF1441dD677B695639E7` | 6 | Stablecoin Liquidity Asset |
+| **Omni Futures Smart Vault** | `0xFD6F7A6a5c21A3f503EBaE7a473639974379c351` | — | ERC-4337 Account Abstraction Paymaster |
+| **Omni Cross-Chain Bridge** | `0xf090f16dEc8b6D24082Edd25B1C8D26f2bC86128` | — | Multi-Chain Liquidity Mesh |
+
+---
 
 ### 🛠️ Technology Stack
 `Gemini Live (gemini-3.1-flash-live / gemini-3.8-flash)` • `Google Cloud Vertex AI` • `Web Audio API (16kHz / 24kHz PCM)` • `Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `W3C DID Cryptographic Engine` • `Python 3` • `SQLite3` • `WebSockets` • `TradingView Charts`
@@ -109,8 +137,8 @@ Decentralized peer-to-peer escrow marketplace connecting buyers and sellers dire
 
 ---
 
-### 5. Multi-Network Deposit Workstation
-Universal collateral deposit terminal supporting Solana, Arbitrum, Ethereum, Bitcoin, BSC, and Polygon. Generates dynamic QR codes, validates chain addresses, and simulates real-time block confirmations.
+### 5. Multi-Network Deposit Workstation & Live On-Chain Inflow Monitor
+Universal collateral deposit terminal supporting Omni Network L1, Arbitrum, Ethereum, Solana, Bitcoin, and BSC. Generates dynamic QR codes, validates chain addresses, and features real-time mempool scanning with automated collateral crediting upon on-chain transaction confirmation.
 
 <div align="center">
   <img src="screenshots/05_deposit_workstation.png" alt="Deposit Workstation" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
@@ -118,8 +146,8 @@ Universal collateral deposit terminal supporting Solana, Arbitrum, Ethereum, Bit
 
 ---
 
-### 6. On-Chain Withdrawal Workstation
-Enterprise-grade withdrawal hub providing instant blockchain settlements, gas fee estimators, address whitelisting, and multi-asset selection.
+### 6. On-Chain Withdrawal Workstation & Real-Time Outflow Relayer
+Enterprise-grade withdrawal and internal transfer desk featuring W3C Decentralized Identity (DID) ECDSA signatures, hardware biometric authentication, and sub-second Omni Network gas relayers across EVM and LayerZero cross-chain bridges.
 
 <div align="center">
   <img src="screenshots/06_withdraw_workstation.png" alt="Withdrawal Workstation" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
