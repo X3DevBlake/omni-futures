@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OmniFutures — Pro Derivatives & Spot Synthetics Exchange</title>
-  <meta name="description" content="Next-Generation Derivatives & Spot Exchange with 100x Leverage, Synthetics (Stocks, ETFs, Bonds), Grid Bots, and Gemini AI Trading Copilot.">
+  <title>OmniFutures — Institutional Derivatives & Spot Exchange</title>
+  <meta name="description" content="Institutional-Grade Perpetuals & Spot Exchange with 200x Leverage, Gemini Live Autonomous Multimodal Trading Copilot, Real-Time Order Flow, and DID Security.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
   <link rel="stylesheet" href="liquid_glass_design_system.css">
@@ -274,7 +274,7 @@
           <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:15px;">account_balance_wallet</span>Assets Hub
         </a>
 
-        <!-- Synthetics & Traditional Assets -->
+        <!-- Traditional Assets & Equities -->
         <a href="#" class="nav-item" id="navItemStocks" onclick="switchWeexView('trade'); selectCategoryNavigation('stocks')">
           <span class="material-symbols-outlined gemini-symbol gemini-grad-green">trending_up</span>Stocks
         </a>
@@ -1680,7 +1680,7 @@
     <div class="weex-hero-header">
       <div class="weex-hero-title-group">
         <h1><svg class="gemini-sparkle-icon" viewBox="0 0 24 24"><use href="#gemini-sparkle-symbol"/></svg> <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:28px;">bar_chart</span> Omni Markets & Derivatives</h1>
-        <p>Real-time 24h market intelligence across 2,321 Perpetual Contracts, Spot Synthetics, Memes & TradFi</p>
+        <p>Real-time 24h market intelligence across 2,321 Perpetual Contracts, Spot Markets, Memes & TradFi</p>
       </div>
       <div class="weex-stats-badges">
         <div class="weex-stat-chip">
@@ -1712,7 +1712,7 @@
           <button class="weex-subnav-btn" onclick="filterWeexMarkets('LOSERS', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-pink" style="font-size:16px;">trending_down</span> Top Losers</button>
           <button class="weex-subnav-btn" onclick="filterWeexMarkets('OMNI', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-rainbow" style="font-size:16px;">hub</span> Omni Perps</button>
           <button class="weex-subnav-btn" onclick="filterWeexMarkets('MEME', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-pink" style="font-size:16px;">rocket_launch</span> Meme Zone</button>
-          <button class="weex-subnav-btn" onclick="filterWeexMarkets('AI', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">smart_toy</span> AI Synthetics</button>
+          <button class="weex-subnav-btn" onclick="filterWeexMarkets('AI', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">smart_toy</span> AI & DePIN</button>
           <button class="weex-subnav-btn" onclick="filterWeexMarkets('STOCKS', this)"><span class="material-symbols-outlined gemini-symbol gemini-grad-green" style="font-size:16px;">monitoring</span> Stocks & ETFs</button>
         </div>
 
@@ -3849,6 +3849,9 @@
         </div>
       </div>
       <div class="voice-hud-controls">
+        <button class="icon-btn-sm voice-pill-btn" id="btnGeminiVisionScan" onclick="triggerGeminiChartVision()" title="Multimodal Chart Vision: Scan Active Candlesticks & Liquidity Walls via Gemini 3.1 Flash">
+          <span class="material-symbols-outlined gemini-symbol gemini-grad-rainbow" style="font-size:14px;">visibility</span> Vision Scan
+        </button>
         <button class="icon-btn-sm voice-pill-btn active" id="btnContinuousLiveToggle" onclick="toggleContinuousLiveTalk()" title="Toggle Continuous 2-Way Conversational Talk (Hands-Free VAD)">
           <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:14px;">sync_alt</span> 2-Way: ON
         </button>
@@ -3899,7 +3902,7 @@
 
     <!-- Live Spoken Transcript Bubble -->
     <div class="voice-bubble user" id="voiceTranscriptBubble">
-      <span class="text-muted">Listening... Say e.g. "Buy 0.5 Bitcoin with 50x leverage and take profit 90k", "Set layout to 2x2 grid", or "Claim faucet"</span>
+      <span class="text-muted">Listening... Say e.g. "Buy 0.5 Bitcoin with 50x leverage and take profit 90k", "Vision scan chart", or "Claim faucet"</span>
     </div>
 
     <!-- Gemini Spoken Response Bubble -->
@@ -3926,7 +3929,7 @@
             <span class="gemini-live-tool-name"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:13px;">check_circle</span> Ready</span>
             <span class="gemini-live-tool-latency">0ms</span>
           </div>
-          <div class="gemini-live-tool-args">Gemini Live autonomous tool executor loaded with 11 native exchange tools.</div>
+          <div class="gemini-live-tool-args">Gemini Live autonomous multimodal tool executor loaded with 14 native exchange tools.</div>
         </div>
       </div>
     </div>
@@ -3939,7 +3942,7 @@
 
     <!-- Conversational Input Bar for Gemini Live -->
     <div class="gemini-live-input-bar">
-      <input type="text" id="geminiLiveTextInput" placeholder="Talk or type to Gemini Live (e.g. 'Buy 0.5 BTC 50x', 'Set layout to 2x2', 'Claim faucet')..." onkeydown="if(event.key==='Enter') sendGeminiLiveInput()">
+      <input type="text" id="geminiLiveTextInput" placeholder="Talk or type to Gemini Live (e.g. 'Buy 0.5 BTC 50x', 'Vision scan chart', 'Claim faucet')..." onkeydown="if(event.key==='Enter') sendGeminiLiveInput()">
       <button class="btn-send-gemini-live" id="btnSendGeminiLive" onclick="sendGeminiLiveInput()" title="Send spoken or typed prompt to Gemini Live">
         <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">send</span>
       </button>
@@ -3947,7 +3950,10 @@
 
     <!-- Quick Spoken Suggestion Chips (1-Click Spoken Dispatch) -->
     <div class="voice-quick-chips" id="voiceQuickChips">
+      <button class="voice-chip" onclick="triggerGeminiChartVision()"><span class="material-symbols-outlined gemini-symbol gemini-grad-rainbow" style="font-size:13px;">visibility</span> Vision Chart Scan</button>
       <button class="voice-chip" onclick="processVoiceCommand('Buy 0.5 Bitcoin with 50x leverage, take profit 90000, stop loss 75000')"><span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:13px;">bolt</span> Buy 0.5 BTC 50x TP/SL</button>
+      <button class="voice-chip" onclick="processVoiceCommand('Calculate liquidation price on 50x leverage')"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:13px;">calculate</span> Liquidation Calc</button>
+      <button class="voice-chip" onclick="processVoiceCommand('Give me institutional market intelligence and order flow briefing')"><span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:13px;">trending_up</span> Market Intel</button>
       <button class="voice-chip" onclick="processVoiceCommand('Switch layout to 2x2 grid and turn on the footprint indicator')"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:13px;">grid_view</span> 2x2 Grid + Footprint</button>
       <button class="voice-chip" onclick="processVoiceCommand('Deploy grid bot on Solana with $2,000')"><span class="material-symbols-outlined gemini-symbol gemini-grad-pink" style="font-size:13px;">smart_toy</span> Deploy Grid Bot SOL</button>
       <button class="voice-chip" onclick="processVoiceCommand('Claim faucet funds')"><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:13px;">water_drop</span> Claim 10k Faucet</button>

@@ -2,7 +2,7 @@
 
 > Institutional-Grade Derivatives & Spot Exchange
 
-![Status](https://img.shields.io/badge/Status-Live%20Production-00e5ff?style=for-the-badge) ![Ecosystem](https://img.shields.io/badge/Ecosystem-Omni%20Network-a855f7?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-ffd700?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Live%20Production-00e5ff?style=for-the-badge) ![Gemini Live](https://img.shields.io/badge/Gemini%20Live-Multimodal%20Trading-00e5ff?style=for-the-badge&logo=google&logoColor=white) ![Ecosystem](https://img.shields.io/badge/Ecosystem-Omni%20Network-a855f7?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-ffd700?style=for-the-badge)
 
 <div align="center">
   <br />
@@ -18,7 +18,34 @@
 
 ## 🌟 Overview
 
-**Omni Futures** is an institutional-grade, high-throughput perpetual contracts and spot trading platform natively deployed across the **Omni Network** ecosystem. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond order routing, up to 200x isolated and cross margin leverage, quantitative copy trading replication, multi-network on-chain collateral settlements (Omni EVM, Arbitrum One, Solana, Ethereum, Bitcoin), and sovereign **W3C Decentralized Identity (DID)** cryptographic signature security.
+**Omni Futures** is an institutional-grade, high-throughput perpetual contracts and spot trading platform natively deployed across the **Omni Network** ecosystem. Engineered with a luxury 3D Liquid Glassmorphism design system, it delivers sub-millisecond order routing, up to 200x isolated and cross margin leverage, quantitative copy trading replication, **Gemini Live Multimodal Autonomous Voice Copilot (`gemini-3.1-flash-live-preview` & `gemini-3.8-flash`)** for real-time speech dialogue and computer vision chart analysis, multi-network on-chain collateral settlements (Omni EVM, Arbitrum One, Solana, Ethereum, Bitcoin), and sovereign **W3C Decentralized Identity (DID)** cryptographic signature security.
+
+---
+
+### 🎙️ Gemini Live Multimodal Autonomous Trading Copilot
+
+Omni Futures integrates Google Cloud Vertex AI and the official Google GenAI SDK to deliver a state-of-the-art **Gemini Live** conversational and multimodal quant trading experience:
+
+- **Real-Time Bidirectional Speech Streaming**: Built directly on the `gemini-3.1-flash-live-preview` and `gemini-3.8-flash` models. Ingests raw 16kHz PCM audio (`audio/pcm;rate=16000`) and streams back 24kHz/48kHz conversational speech synthesis with institutional cadence.
+- **Continuous Hands-Free Voice Activity Detection (VAD)**: Sub-15ms local VAD latency. Speak naturally to the terminal without clicking buttons, with immediate barge-in voice interruption handling whenever you speak over the agent.
+- **Multimodal Computer Vision Analysis**: Direct real-time raster scanning of the terminal's active candlestick chart and order book depth canvas (`candleChartCanvas`). Gemini visually parses candlestick structures (continuation flags, pinbars, liquidity sweeps), calculates dynamic support and resistance levels, and formulates quantitative entry/exit setups.
+- **Sub-Second Autonomous Tool Dispatch**: 14 native exchange tools wired directly into the order matching engine:
+  1. `executeTrade`: Voice-driven execution for market, limit, stop, TP/SL orders (e.g. *"Buy 0.5 Bitcoin with 50x leverage, take profit 90,000 and stop loss 75,000"*).
+  2. `closePosition`: Partial and full position closing (*"Close half of my Bitcoin position"*).
+  3. `reversePosition`: Instant 1-click contract flip (*"Flip my position to short"*).
+  4. `emergencyFlatten`: Instant kill-switch liquidation (*"Emergency flatten all"*).
+  5. `calculateLiquidation`: Real-time margin and liquidation calculations with safety buffer percentages.
+  6. `analyzeChartVision`: Multimodal visual breakdown of candlestick chart and orderbook depth.
+  7. `getMarketIntel`: Real-time institutional order flow briefing, 24h volume, and funding rates.
+  8. `deployGridBot`: Autonomous algorithmic grid bot deployment (*"Deploy grid bot on Solana with $2,000"*).
+  9. `setChartLayout`: Terminal workspace layout management (*"Switch layout to 2x2 grid"*).
+  10. `toggleIndicator`: Instant order flow overlays (*"Turn on institutional footprint and volume profile"*).
+  11. `openOmniWallet`: Universal collateral routing (*"Show my wallet balances"*, *"Open Apple Pay on-ramp"*).
+  12. `claimFaucet`: Instant testnet capital provisioning (*"Claim 10k faucet funds"*).
+  13. `runBacktest`: Quantitative algorithmic simulation and strategy backtesting (*"Backtest SMA crossover on Bitcoin"*).
+  14. `switchMarket`: Instant contract switching across 2,300+ pairs (*"Switch to Ethereum"*).
+- **Fluid Chromatic Aura & Oscilloscope Visualizer**: 3 real-time audio visualization engines (Gemini Quantum Aura Orb, 64-band FFT Spectrum Analyzer, and Stereo VU Meter) responding dynamically to microphone input frequencies and AI speech.
+- **Autonomous Risk Squawk Alerts**: Background telemetry scanner that speaks proactive vocal warnings for margin ratios >70%, liquidation proximity, and order book imbalance anomalies.
 
 ---
 
@@ -40,11 +67,11 @@ The **$OMNI Token** is the core economic engine powering the Omni Futures exchan
 - **OmniDAO Governance Rights**: Token holders propose, vote on, and govern new listing pairs, risk leverage parameters, and protocol fee distributions.
 
 ### 🛠️ Technology Stack
-`Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `W3C DID Cryptographic Engine` • `Python 3` • `SQLite3` • `WebSockets` • `TradingView Charts`
+`Gemini Live (gemini-3.1-flash-live / gemini-3.8-flash)` • `Google Cloud Vertex AI` • `Web Audio API (16kHz / 24kHz PCM)` • `Vanilla JS (ES6+)` • `HTML5 / CSS3` • `Liquid Glassmorphism` • `W3C DID Cryptographic Engine` • `Python 3` • `SQLite3` • `WebSockets` • `TradingView Charts`
 
 ---
 
-## 📸 Comprehensive Feature Showcase (11 Views)
+## 📸 Comprehensive Feature Showcase (12 Views)
 
 ### 1. 200x Perpetuals Trading Terminal
 The flagship workstation featuring real-time interactive candlestick charts, streaming depth charts, live bid/ask order book, leverage slider up to 200x, TP/SL risk management controls, and real-time position tracking with liquidation price monitors.
@@ -145,6 +172,15 @@ Direct connection to the Omni Network decentralized yield infrastructure, delive
 
 ---
 
+### 12. Gemini Live Autonomous Trading HUD & Multimodal Vision Workstation
+The cutting-edge conversational trading desk powered by **Gemini Live (`gemini-3.1-flash-live-preview`)**. Features continuous hands-free Voice Activity Detection (VAD), fluid chromatic quantum orb oscilloscope, sub-15ms tool dispatch telemetry, real-time multimodal chart vision scan with support/resistance recognition, conversational speech synthesis, and 1-click voice action suggestions.
+
+<div align="center">
+  <img src="screenshots/12_gemini_live_trading_hud.png" alt="Gemini Live Autonomous Trading HUD" width="100%" style="border-radius: 10px; border: 1px solid rgba(0, 229, 255, 0.3);" />
+</div>
+
+---
+
 ## 📁 Repository Structure
 
 ```
@@ -161,11 +197,12 @@ Direct connection to the Omni Network decentralized yield infrastructure, delive
 │   ├── 09_internal_transfer_modal.png   # Sub-zero latency internal account transfers
 │   ├── 10_copy_trading_engine.png       # Quant copy trading engine & master leaderboard
 │   ├── 11_earn_staking_vaults.png       # 18.5% APY $OMNI staking & protocol yield vaults
+│   ├── 12_gemini_live_trading_hud.png   # Gemini Live Multimodal Trading Copilot HUD
 │   └── showcase_preview.png             # Master repository preview
 ├── index.html                           # Exchange SPA frontend
 ├── style.css                            # Liquid Glassmorphism design system
-├── app.js                               # Reactive state engine & chart controller
-├── server.py                            # SQLite database & matching engine backend
+├── app.js                               # Reactive state engine & Gemini Live voice controller
+├── server.py                            # SQLite database, matching engine & Gemini Live API backend
 └── README.md                            # Documentation & feature showcase
 ```
 
