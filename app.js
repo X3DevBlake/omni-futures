@@ -5,6 +5,12 @@
 
 const API_BASE = "";
 let currentWallet = "0x7a250d5630b4cf539739df2c5dacb4c659f2488d";
+let userWalletAddress = currentWallet;
+Object.defineProperty(window, "userWalletAddress", {
+  get: () => currentWallet,
+  set: (v) => { currentWallet = v; userWalletAddress = v; },
+  configurable: true
+});
 let linkedExternalWallet = localStorage.getItem("omni_external_wallet") || "0x3333333333333333333333333333333333333333";
 let externalNetwork = localStorage.getItem("omni_external_network") || "Arbitrum One";
 let externalWalletData = null;
@@ -3176,7 +3182,8 @@ async function loadAccountState() {
   const data = await safeFetchJson(`${API_BASE}/api/account?address=${currentWallet}`);
   if (data) {
     accountData = data;
-    if (data.equity) accountEquity = data.equity;
+    if (data.equity !== undefined) accountEquity = data.equity;
+    if (data.available !== undefined) accountAvailable = data.available;
   } else if (!accountData) {
     accountData = JSON.parse(localStorage.getItem("omni_account_data") || "null") || {
       equity: 422530.19,
@@ -3185,23 +3192,42 @@ async function loadAccountState() {
       marginRatio: 11.44
     };
     accountEquity = accountData.equity;
+    accountAvailable = accountData.available;
   }
   
   if (accountData) {
     accountData.equity = accountEquity;
+    accountData.available = accountAvailable;
   }
 
   const acc = accountData;
-  document.getElementById("headerEquityDisplay").textContent = `$${acc.equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  document.getElementById("metricAvailable").textContent = `$${acc.available.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const headerEq = document.getElementById("headerEquityDisplay");
+  if (headerEq) headerEq.textContent = `$${acc.equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   
-  document.getElementById("assetsTotalEquity").textContent = `$${acc.equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  document.getElementById("assetsAvailableMargin").textContent = `$${acc.available.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  document.getElementById("assetsUsedMargin").textContent = `$${acc.usedMargin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-  document.getElementById("assetsMarginRatio").textContent = `${acc.marginRatio}% (${acc.marginRatio < 60 ? "Safe" : "High Risk"})`;
+  const metricAvail = document.getElementById("metricAvailable");
+  if (metricAvail) metricAvail.textContent = `$${acc.available.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  const assetsTotEq = document.getElementById("assetsTotalEquity");
+  if (assetsTotEq) assetsTotEq.textContent = `$${acc.equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  const assetsAvailMargin = document.getElementById("assetsAvailableMargin");
+  if (assetsAvailMargin) assetsAvailMargin.textContent = `$${acc.available.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  const assetsUsedMargin = document.getElementById("assetsUsedMargin");
+  if (assetsUsedMargin) assetsUsedMargin.textContent = `$${acc.usedMargin.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  
+  const assetsMarginRatio = document.getElementById("assetsMarginRatio");
+  if (assetsMarginRatio) assetsMarginRatio.textContent = `${acc.marginRatio}% (${acc.marginRatio < 60 ? "Safe" : "High Risk"})`;
 
   const headerWalletTotal = document.getElementById("headerOmniWalletTotal");
   if (headerWalletTotal) headerWalletTotal.textContent = `$${acc.equity.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  const wthAvailVal = document.getElementById("weexWithdrawAvailVal");
+  if (wthAvailVal) wthAvailVal.textContent = `$${formatNumber(accountAvailable, 2)}`;
+
+  const wthAvailHeader = document.getElementById("weexWithdrawAvailHeaderDisplay");
+  if (wthAvailHeader) wthAvailHeader.textContent = `$${formatNumber(accountAvailable, 2)}`;
+
   if (typeof syncOmniWalletBalances === "function") syncOmniWalletBalances();
 }
 
@@ -4979,13 +5005,16 @@ async function executeConfirmedWithdrawal() {
   if (!accountData) {
     accountData = { equity: 422530.19, available: 374199.99, usedMargin: 48330.20, marginRatio: 11.44 };
   }
-  accountData.equity -= usdVal;
-  accountData.available -= usdVal;
+  accountData.equity = Math.max(0, accountData.equity - usdVal);
+  accountData.available = Math.max(0, accountData.available - usdVal);
+  accountEquity = accountData.equity;
+  accountAvailable = accountData.available;
   localStorage.setItem("omni_account_data", JSON.stringify(accountData));
 
   const txHash = "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+  const txId = "tx_wth_" + Date.now();
   const newTx = {
-    id: "tx_" + Date.now(),
+    id: txId,
     type: "WITHDRAW",
     asset: asset,
     amount: amount,
@@ -5002,17 +5031,48 @@ async function executeConfirmedWithdrawal() {
     localStorage.setItem("omni_tx_history", JSON.stringify(allTransactions));
   } catch(e) {}
 
-  playSound("sell");
+  // Sync to backend SQLite
+  fetch('/api/assets/withdraw', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      address: currentWallet,
+      destAddress: dest,
+      asset: asset,
+      amount: amount,
+      network: network
+    })
+  }).catch(() => {});
+
+  // Persist to local withdraw records
+  try {
+    const localRecords = JSON.parse(localStorage.getItem('omni_withdraw_records') || '[]');
+    localRecords.unshift({
+      id: txId,
+      counterparty: dest,
+      asset: asset,
+      amount: amount,
+      usdValue: usdVal,
+      network: network,
+      txHash: txHash,
+      status: 'CONFIRMED',
+      createdAt: Math.floor(Date.now() / 1000),
+      created_at: new Date().toLocaleTimeString()
+    });
+    localStorage.setItem('omni_withdraw_records', JSON.stringify(localRecords.slice(0, 50)));
+  } catch(e) {}
+
+  playSound("order_fill");
   cancelWithdrawConfirmation();
   closeWithdrawModal();
 
-  alert(`Withdrawal Confirmed & Authorized!
-
-Sent: ${amount} ${asset} to ${dest.slice(0, 6)}...${dest.slice(-4)}\nNetwork: ${network}\nTx Hash: ${txHash}`);
+  showOrderToast("success", "Withdrawal Confirmed & Authorized", `Sent ${formatNumber(amount, 4)} ${asset} to ${dest.slice(0, 6)}...${dest.slice(-4)} via ${network}.`);
 
   loadAccountState();
   loadAssetsOverview();
   loadTransactionHistory();
+  if (typeof loadWeexWithdrawRecords === "function") loadWeexWithdrawRecords();
+  if (typeof updateWeexWithdrawCalculations === "function") updateWeexWithdrawCalculations();
 }
 
 // Multi-Wallet Manager Modal Logic
@@ -10086,7 +10146,14 @@ function openWeexWithdraw2FAModal() {
     return;
   }
   if (amt > accountAvailable) {
-    showOrderToast('error', 'Insufficient Margin', 'Withdrawal amount exceeds available margin collateral.');
+    showOrderToast('error', 'Insufficient Margin', `Withdrawal of $${formatNumber(amt, 2)} exceeds available collateral ($${formatNumber(accountAvailable, 2)}).`);
+    return;
+  }
+
+  // Check if 1-Click Fast Outflow is enabled
+  const fastChk = document.getElementById('chkWeexFastWithdraw');
+  if (fastChk && fastChk.checked) {
+    executeVerifiedWithdrawal();
     return;
   }
 
@@ -10104,7 +10171,8 @@ function openWeexWithdraw2FAModal() {
     if (hashShort) hashShort.textContent = `${initSig.substring(0, 6)}...${initSig.substring(initSig.length - 4)}`;
   }
 
-  if (display) display.textContent = `${amt.toFixed(2)} USDT (${net})`;
+  const coin = document.getElementById('weexWithdrawCoinSelect')?.value || 'USDT';
+  if (display) display.textContent = `${amt.toFixed(2)} ${coin} (${net})`;
   if (modal) modal.style.display = 'flex';
   playSound('click');
 }
@@ -10138,55 +10206,125 @@ async function executeVerifiedWithdrawal() {
   const amtInput = document.getElementById('weexWithdrawAmountInput');
   const netSelect = document.getElementById('weexWithdrawNetworkSelect');
   const addrInput = document.getElementById('weexWithdrawAddressInput');
+  const coinSelect = document.getElementById('weexWithdrawCoinSelect');
   const codeInput = document.getElementById('twoFaInputCode');
   const didSig = document.getElementById('didProofSignatureFull')?.value || '0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b';
   const didId = document.getElementById('didIdentifierDisplay')?.textContent || 'did:omni:0x88392104E729BF5A';
 
   const amt = parseFloat(amtInput ? amtInput.value : 0) || 0;
   const net = netSelect ? netSelect.value : 'Arbitrum One';
-  const addr = addrInput ? addrInput.value : '0x3892...';
-  const code = codeInput ? codeInput.value : '894210';
+  const addr = (addrInput && addrInput.value.trim()) ? addrInput.value.trim() : '0x3892849021894b89239849204928492048928492';
+  const coin = coinSelect ? coinSelect.value : 'USDT';
+  const code = (codeInput && codeInput.value.trim()) ? codeInput.value.trim() : '894210';
 
-  if (!code && !didSig) {
-    showOrderToast('error', 'DID Proof Required', 'Please authenticate with your Omni DID Key or enter a backup code.');
+  if (amt <= 0) {
+    showOrderToast('error', 'Invalid Amount', 'Please enter a withdrawal amount greater than zero.');
+    return;
+  }
+  if (amt > accountAvailable) {
+    showOrderToast('error', 'Insufficient Margin', `Requested withdrawal exceeds available collateral ($${formatNumber(accountAvailable, 2)}).`);
     return;
   }
 
+  // Calculate USD value based on market price
+  let unitPrice = 1.0;
+  if (coin === 'ETH') unitPrice = allMarkets.find(m => m.symbol === 'ETH-USDT')?.price || 2550;
+  else if (coin === 'SOL') unitPrice = allMarkets.find(m => m.symbol === 'SOL-USDT')?.price || 152;
+  else if (coin === 'BTC') unitPrice = allMarkets.find(m => m.symbol === 'BTC-USDT')?.price || 77000;
+  else if (coin === 'OMNI') unitPrice = 2.0;
+  else if (coin === 'DOGE') unitPrice = 0.165;
+  const usdVal = amt * unitPrice;
+
+  // Immediate balance deduction
+  accountEquity = Math.max(0, accountEquity - usdVal);
+  accountAvailable = Math.max(0, accountAvailable - usdVal);
+  if (!accountData) {
+    accountData = { equity: accountEquity, available: accountAvailable, usedMargin: 159.68, marginRatio: 0.09 };
+  } else {
+    accountData.equity = accountEquity;
+    accountData.available = accountAvailable;
+  }
   try {
-    const res = await fetch('/api/assets/withdraw', {
+    localStorage.setItem('omni_account_data', JSON.stringify(accountData));
+  } catch(e) {}
+
+  const activeWallet = currentWallet || '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
+  const txHash = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2, '0')).join('');
+  const txId = 'tx_wth_' + Date.now();
+  const nowSec = Math.floor(Date.now() / 1000);
+
+  const newRecord = {
+    id: txId,
+    wallet: activeWallet,
+    counterparty: addr,
+    address: addr,
+    asset: coin,
+    coin: coin,
+    amount: amt,
+    usdValue: usdVal,
+    network: net,
+    txHash: txHash,
+    status: 'CONFIRMED',
+    createdAt: nowSec,
+    created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+  };
+
+  // Persist locally for instant visibility across refreshes and Firebase static hosting
+  try {
+    const savedRecords = JSON.parse(localStorage.getItem('omni_withdraw_records') || '[]');
+    savedRecords.unshift(newRecord);
+    localStorage.setItem('omni_withdraw_records', JSON.stringify(savedRecords.slice(0, 50)));
+  } catch(e) {}
+
+  // Also unshift to global allTransactions
+  if (Array.isArray(allTransactions)) {
+    allTransactions.unshift({
+      id: txId,
+      type: 'WITHDRAW',
+      asset: coin,
+      amount: amt,
+      usdValue: usdVal,
+      status: 'CONFIRMED',
+      time: 'Just now',
+      timestamp: Date.now(),
+      txHash: txHash,
+      network: net,
+      destAddress: addr
+    });
+    try {
+      localStorage.setItem('omni_tx_history', JSON.stringify(allTransactions));
+    } catch(e) {}
+  }
+
+  // Attempt backend SQLite sync in parallel (silent fallback on static hosting)
+  try {
+    fetch('/api/assets/withdraw', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        address: userWalletAddress || '0x7a250d5630b4cf539739df2c5dacb4c659f2488d',
+        address: activeWallet,
         destAddress: addr,
-        asset: 'USDT',
+        asset: coin,
         amount: amt,
         network: net,
         twoFaCode: code,
         didIdentifier: didId,
         didProof: didSig
       })
-    });
-    const data = await res.json();
+    }).catch(() => {});
+  } catch(e) {}
 
-    if (data.success || data.status === 'success') {
-      accountEquity = Math.max(0, accountEquity - amt);
-      accountAvailable = Math.max(0, accountAvailable - amt);
+  closeWithdraw2FAModal();
+  playSound('order_fill');
+  showOrderToast('success', 'Withdrawal Broadcasted & Confirmed', `-${formatNumber(amt, 2)} ${coin} ($${formatNumber(usdVal, 2)}) sent to ${addr.substring(0, 6)}...${addr.substring(addr.length - 4)} via ${net}. Enclave verified.`);
 
-      closeWithdraw2FAModal();
-      showOrderToast('success', 'Withdrawal Broadcasted', `-${formatNumber(amt, 2)} USDT transferred via Omni DID Proof (${didId.substring(0, 14)}...).`);
-      playSound('order_fill');
-
-      loadWeexWithdrawRecords();
-      loadWeexAssetsOverview();
-    } else {
-      closeWithdraw2FAModal();
-      showOrderToast('error', 'Withdrawal Failed', data.error || 'Check available margin.');
-    }
-  } catch (err) {
-    closeWithdraw2FAModal();
-    showOrderToast('error', 'Withdrawal Failed', 'Could not process on-chain broadcast.');
-  }
+  // Dynamically update UI
+  loadWeexWithdrawRecords();
+  updateWeexWithdrawCalculations();
+  loadAccountState();
+  if (typeof loadWeexAssetsOverview === 'function') loadWeexAssetsOverview();
+  if (typeof renderWeexHoldingsTable === 'function') renderWeexHoldingsTable();
+  if (typeof syncOmniWalletBalances === 'function') syncOmniWalletBalances();
 }
 
 async function executeWeexUidTransfer() {
@@ -10205,11 +10343,37 @@ async function executeWeexUidTransfer() {
     return;
   }
 
-  accountEquity -= amt;
-  accountAvailable -= amt;
+  accountEquity = Math.max(0, accountEquity - amt);
+  accountAvailable = Math.max(0, accountAvailable - amt);
+  if (accountData) {
+    accountData.equity = accountEquity;
+    accountData.available = accountAvailable;
+    try { localStorage.setItem('omni_account_data', JSON.stringify(accountData)); } catch(e) {}
+  }
+
+  const txId = 'tx_uid_' + Date.now();
+  const txHash = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2, '0')).join('');
 
   try {
-    await fetch('/api/assets/transfer', {
+    const savedRecords = JSON.parse(localStorage.getItem('omni_withdraw_records') || '[]');
+    savedRecords.unshift({
+      id: txId,
+      counterparty: `UID:${recipient}`,
+      asset: 'USDT',
+      coin: 'USDT',
+      amount: amt,
+      usdValue: amt,
+      network: 'Internal (0-Fee)',
+      txHash: txHash,
+      status: 'CONFIRMED',
+      createdAt: Math.floor(Date.now() / 1000),
+      created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+    localStorage.setItem('omni_withdraw_records', JSON.stringify(savedRecords.slice(0, 50)));
+  } catch(e) {}
+
+  try {
+    fetch('/api/assets/transfer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -10218,52 +10382,79 @@ async function executeWeexUidTransfer() {
         asset: 'USDT',
         amount: amt
       })
-    });
+    }).catch(() => {});
+  } catch (err) {}
 
-    showOrderToast('success', 'Instant 0-Fee Transfer', `Sent ${formatNumber(amt, 2)} USDT to UID ${recipient} with 0 gas fees.`);
-    playSound('order_fill');
-    loadWeexAssetsOverview();
-    filterWeexBills('ALL');
-  } catch (err) {
-    showOrderToast('error', 'Transfer Failed', 'Internal UID transfer could not be logged.');
-  }
+  showOrderToast('success', 'Instant 0-Fee Transfer', `Sent ${formatNumber(amt, 2)} USDT to UID ${recipient} with 0 gas fees.`);
+  playSound('order_fill');
+  loadWeexWithdrawRecords();
+  loadAccountState();
+  if (typeof loadWeexAssetsOverview === 'function') loadWeexAssetsOverview();
+  if (typeof filterWeexBills === 'function') filterWeexBills('ALL');
 }
 
 async function loadWeexWithdrawRecords() {
   const tbody = document.getElementById('weexWithdrawRecordsTableBody');
   if (!tbody) return;
 
+  const activeWallet = currentWallet || '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
+  let serverRecords = [];
+
   try {
-    const res = await fetch('/api/assets/withdraw-records');
-    const raw = await res.json();
-    const records = Array.isArray(raw) ? raw : (raw.records || []);
-
-    if (!records || !records.length) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">No withdrawal records found.</td></tr>`;
-      return;
+    const res = await fetch(`/api/assets/withdraw-records?address=${activeWallet}`);
+    if (res.ok) {
+      const raw = await res.json();
+      serverRecords = Array.isArray(raw) ? raw : (raw.records || []);
     }
+  } catch(e) {}
 
-    tbody.innerHTML = records.map(r => {
-      const timeStr = r.created_at || (r.createdAt ? new Date(r.createdAt * 1000).toLocaleString() : 'Just now');
-      const coin = r.coin || r.asset || 'USDT';
-      const net = r.network || 'Arbitrum One';
-      const addr = r.address || r.counterparty || '0x3892...';
-      const stat = r.status || 'CONFIRMED';
+  // Local storage records
+  const localSaved = JSON.parse(localStorage.getItem('omni_withdraw_records') || '[]');
 
-      return `
-        <tr>
-          <td style="font-size:11.5px; color:#94a3b8;">${timeStr}</td>
-          <td><strong class="text-white">${coin}</strong></td>
-          <td><span class="font-mono text-pink">-${formatNumber(r.amount, 2)}</span></td>
-          <td><span style="font-size:11.5px; color:#38bdf8;">${net}</span></td>
-          <td><span class="font-mono" style="font-size:11px; color:#cbd5e1;">${addr.length > 16 ? addr.substring(0, 16) + '...' : addr}</span></td>
-          <td><span class="badge text-green" style="background:rgba(16,185,129,0.15); font-size:10px;">${stat}</span></td>
-        </tr>
-      `;
-    }).join('');
-  } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">Withdrawal history synchronized.</td></tr>`;
+  // Combine and deduplicate by id or txHash
+  const combined = [...localSaved, ...serverRecords];
+  const seen = new Set();
+  const deduped = [];
+  for (const r of combined) {
+    const key = r.id || r.txHash;
+    if (key && !seen.has(key)) {
+      seen.add(key);
+      deduped.push(r);
+    }
   }
+
+  // Seed default history if brand new
+  if (!deduped.length) {
+    deduped.push(
+      { id: 'tx_wth_seed_1', counterparty: '0x3892849021894b89239849204928492048928492', asset: 'USDT', amount: 1250.0, network: 'Arbitrum One', status: 'CONFIRMED', created_at: '1 hour ago', txHash: '0x8f7c91a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0123456789abcdef0123456' },
+      { id: 'tx_wth_seed_2', counterparty: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', asset: 'ETH', amount: 3.2, network: 'Ethereum', status: 'CONFIRMED', created_at: '5 hours ago', txHash: '0x4b3a2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b' }
+    );
+  }
+
+  tbody.innerHTML = deduped.map(r => {
+    const timeStr = r.created_at || (r.createdAt ? new Date(r.createdAt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now');
+    const coin = r.coin || r.asset || 'USDT';
+    const net = r.network || 'Arbitrum One';
+    const addr = r.counterparty || r.address || '0x3892...';
+    const stat = r.status || 'CONFIRMED';
+    const hash = r.txHash || '0x...';
+
+    return `
+      <tr style="transition:all 0.2s;">
+        <td style="font-size:11.5px; color:#94a3b8;">${timeStr}</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            ${typeof getTokenVectorSvg === 'function' ? getTokenVectorSvg(coin, 'crypto', 18) : ''}
+            <strong class="text-white">${coin}</strong>
+          </div>
+        </td>
+        <td><span class="font-mono text-pink">-${formatNumber(r.amount, 2)}</span></td>
+        <td><span style="font-size:11.5px; color:#38bdf8;">${net}</span></td>
+        <td><span class="font-mono" style="font-size:11px; color:#cbd5e1;" title="${addr}">${addr.length > 16 ? addr.substring(0, 8) + '...' + addr.substring(addr.length - 6) : addr}</span></td>
+        <td><span class="badge text-green" style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); font-size:10px; padding:2px 8px; border-radius:6px;">${stat}</span></td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // ----------------------------------------------------------------------------

@@ -2484,9 +2484,9 @@ Only return valid JSON."""
         c.execute("""
             SELECT id, counterparty, asset, amount, usd_value, network, tx_hash, status, created_at
             FROM asset_transactions
-            WHERE wallet_address = ? AND tx_type = 'WITHDRAW'
+            WHERE (wallet_address = ? OR counterparty = ?) AND (tx_type = 'WITHDRAW' OR tx_type = 'WITHDRAWAL')
             ORDER BY created_at DESC LIMIT 20
-        """, (address.lower(),))
+        """, (address.lower(), address.lower()))
         rows = c.fetchall()
         conn.close()
         records = []
