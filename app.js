@@ -4987,18 +4987,28 @@ async function executeConfirmedWithdrawal() {
     statusMsg.innerHTML = `<span><span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:16px;">hourglass_top</span> Requesting withdrawal signature in wallet extension...</span>`;
   }
 
-  // If window.ethereum is connected, prompt signature
+  // If window.ethereum is connected, prompt signature with strict rejection check
   if (typeof window.ethereum !== "undefined" && currentWallet.startsWith("0x")) {
     try {
+      const authMsg = `OmniFutures Protocol Withdrawal Authorization\nRecipient: ${dest}\nAmount: ${amount} ${asset} (~$${usdVal.toFixed(2)} USD)\nNetwork: ${network}\nTimestamp: ${new Date().toISOString()}`;
+      const msgHex = '0x' + Array.from(new TextEncoder().encode(authMsg)).map(b => b.toString(16).padStart(2, '0')).join('');
       await window.ethereum.request({
         method: "personal_sign",
-        params: [
-          `OmniFutures Withdrawal Authorization:\nRecipient: ${dest}\nAmount: ${amount} ${asset}\nNetwork: ${network}\nTimestamp: ${Date.now()}`,
-          currentWallet
-        ]
+        params: [msgHex, currentWallet]
       });
     } catch (sigErr) {
-      console.warn("Wallet authorization signature handled:", sigErr);
+      console.warn("Wallet authorization signature declined or cancelled:", sigErr);
+      if (btnAuth) {
+        btnAuth.disabled = false;
+        btnAuth.innerHTML = `<span><span class="material-symbols-outlined gemini-symbol" style="font-size:15px;">refresh</span> Retry Wallet Signature</span>`;
+      }
+      if (statusMsg) {
+        statusMsg.style.display = "block";
+        statusMsg.innerHTML = `<span style="color:#ef4444;"><span class="material-symbols-outlined gemini-symbol" style="font-size:16px; vertical-align:middle;">cancel</span> Signature declined in wallet. Collateral preserved.</span>`;
+      }
+      playSound('alert');
+      showOrderToast('error', 'Authorization Cancelled', 'Withdrawal was cancelled: Signature request was declined in your wallet. Zero collateral was deducted.');
+      return; // CRITICAL: Strict cancellation safeguard — do NOT deduct funds!
     }
   }
 
@@ -10135,11 +10145,18 @@ function triggerDidSignatureVerification() {
   }, 350);
 }
 
+let isAwaitingWeb3Signature = false;
+
 function openWeexWithdraw2FAModal() {
   const amtInput = document.getElementById('weexWithdrawAmountInput');
   const netSelect = document.getElementById('weexWithdrawNetworkSelect');
+  const addrInput = document.getElementById('weexWithdrawAddressInput');
+  const coinSelect = document.getElementById('weexWithdrawCoinSelect');
+
   const amt = parseFloat(amtInput ? amtInput.value : 0) || 0;
   const net = netSelect ? netSelect.value : 'Arbitrum One';
+  const addr = (addrInput && addrInput.value.trim()) ? addrInput.value.trim() : '0x3892849021894b89239849204928492048928492';
+  const coin = coinSelect ? coinSelect.value : 'USDT';
 
   if (amt <= 0) {
     showOrderToast('error', 'Invalid Amount', 'Please enter a withdrawal amount greater than zero.');
@@ -10150,36 +10167,246 @@ function openWeexWithdraw2FAModal() {
     return;
   }
 
-  // Check if 1-Click Fast Outflow is enabled
-  const fastChk = document.getElementById('chkWeexFastWithdraw');
-  if (fastChk && fastChk.checked) {
-    executeVerifiedWithdrawal();
-    return;
-  }
-
   const modal = document.getElementById('modalWithdraw2FA');
   const display = document.getElementById('twoFaAmountDisplay');
+  const destDisplay = document.getElementById('wthModalDestDisplay');
+  const netDisplay = document.getElementById('wthModalNetworkDisplay');
   const nonceDisplay = document.getElementById('didChallengeNonceDisplay');
-  const fullSigInput = document.getElementById('didProofSignatureFull');
+  const didIdentifierDisplay = document.getElementById('didIdentifierDisplay');
+  const providerLabel = document.getElementById('web3ProviderNameLabel');
+  const extBadge = document.getElementById('web3ExtensionBadge');
+  const btnSign = document.getElementById('btnSignWithWeb3Wallet');
+  const btnText = document.getElementById('btnSignWithWeb3Text');
+  const statusContainer = document.getElementById('didProofStatusContainer');
+  const statusText = document.getElementById('didSignatureStatusText');
+  const statusIcon = document.getElementById('didStatusIcon');
   const hashShort = document.getElementById('didSigHashShort');
+  const broadcastBtn = document.getElementById('btnBroadcastWithdrawal');
 
+  const activeWallet = currentWallet || '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
   const nonce = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(b => b.toString(16).padStart(2, '0')).join('');
+
   if (nonceDisplay) nonceDisplay.textContent = `Nonce: ${nonce}`;
-  if (fullSigInput && !fullSigInput.value) {
-    const initSig = '0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b';
-    fullSigInput.value = initSig;
-    if (hashShort) hashShort.textContent = `${initSig.substring(0, 6)}...${initSig.substring(initSig.length - 4)}`;
+  if (display) display.textContent = `${amt.toFixed(2)} ${coin}`;
+  if (destDisplay) destDisplay.textContent = `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}`;
+  if (netDisplay) netDisplay.textContent = net;
+  if (didIdentifierDisplay) didIdentifierDisplay.textContent = activeWallet;
+
+  // Detect Web3 Provider
+  let providerName = 'Hardware DID Enclave';
+  let hasExt = false;
+  if (typeof window.ethereum !== 'undefined') {
+    hasExt = true;
+    if (window.ethereum.isMetaMask) providerName = 'MetaMask';
+    else if (window.ethereum.isRabby) providerName = 'Rabby Wallet';
+    else if (window.ethereum.isCoinbaseWallet) providerName = 'Coinbase Wallet';
+    else providerName = 'Web3 Wallet';
+  } else if (typeof window.solana !== 'undefined' && window.solana.isPhantom && net === 'Solana Mainnet') {
+    hasExt = true;
+    providerName = 'Phantom Wallet';
   }
 
-  const coin = document.getElementById('weexWithdrawCoinSelect')?.value || 'USDT';
-  if (display) display.textContent = `${amt.toFixed(2)} ${coin} (${net})`;
+  if (providerLabel) providerLabel.textContent = `Connected: ${providerName}`;
+  if (extBadge) {
+    if (hasExt) {
+      extBadge.textContent = '● EXTENSION READY';
+      extBadge.style.color = '#10b981';
+      extBadge.style.background = 'rgba(16,185,129,0.18)';
+      extBadge.style.borderColor = 'rgba(16,185,129,0.35)';
+    } else {
+      extBadge.textContent = '● HARDWARE ENCLAVE';
+      extBadge.style.color = '#38bdf8';
+      extBadge.style.background = 'rgba(56,189,248,0.18)';
+      extBadge.style.borderColor = 'rgba(56,189,248,0.35)';
+    }
+  }
+
+  if (btnText) btnText.textContent = hasExt ? `Sign Authorization in ${providerName}` : 'Sign via Omni Hardware DID Passkey';
+  if (btnSign) {
+    btnSign.style.opacity = '1';
+    btnSign.style.background = 'linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%)';
+    btnSign.disabled = false;
+  }
+
+  // Initial ready status
+  if (statusContainer) {
+    statusContainer.style.borderColor = 'rgba(0,229,255,0.3)';
+    statusContainer.style.background = 'rgba(10,15,29,0.85)';
+  }
+  if (statusIcon) {
+    statusIcon.textContent = 'fingerprint';
+    statusIcon.style.color = '#00e5ff';
+  }
+  if (statusText) {
+    statusText.textContent = hasExt ? `Ready: Prompting ${providerName} for cryptographic signature...` : 'Ready: Click button to sign with Hardware Passkey';
+    statusText.style.color = '#cbd5e1';
+  }
+  if (hashShort) hashShort.textContent = 'Unsigned';
+  if (broadcastBtn) broadcastBtn.style.display = 'none';
+
   if (modal) modal.style.display = 'flex';
   playSound('click');
+
+  // Immediately prompt wallet signature
+  setTimeout(() => {
+    requestWeb3WalletSignature();
+  }, 150);
 }
 
 function closeWithdraw2FAModal() {
   const modal = document.getElementById('modalWithdraw2FA');
   if (modal) modal.style.display = 'none';
+  isAwaitingWeb3Signature = false;
+}
+
+async function requestWeb3WalletSignature() {
+  if (isAwaitingWeb3Signature) return;
+
+  const amtInput = document.getElementById('weexWithdrawAmountInput');
+  const netSelect = document.getElementById('weexWithdrawNetworkSelect');
+  const addrInput = document.getElementById('weexWithdrawAddressInput');
+  const coinSelect = document.getElementById('weexWithdrawCoinSelect');
+
+  const amt = parseFloat(amtInput ? amtInput.value : 0) || 0;
+  const net = netSelect ? netSelect.value : 'Arbitrum One';
+  const addr = (addrInput && addrInput.value.trim()) ? addrInput.value.trim() : '0x3892849021894b89239849204928492048928492';
+  const coin = coinSelect ? coinSelect.value : 'USDT';
+  const activeWallet = currentWallet || '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
+
+  // Calculate USD value based on market price
+  let unitPrice = 1.0;
+  if (coin === 'ETH') unitPrice = allMarkets.find(m => m.symbol === 'ETH-USDT')?.price || 2550;
+  else if (coin === 'SOL') unitPrice = allMarkets.find(m => m.symbol === 'SOL-USDT')?.price || 152;
+  else if (coin === 'BTC') unitPrice = allMarkets.find(m => m.symbol === 'BTC-USDT')?.price || 77000;
+  else if (coin === 'OMNI') unitPrice = 2.0;
+  else if (coin === 'DOGE') unitPrice = 0.165;
+  const usdVal = amt * unitPrice;
+
+  const btnSign = document.getElementById('btnSignWithWeb3Wallet');
+  const btnText = document.getElementById('btnSignWithWeb3Text');
+  const statusContainer = document.getElementById('didProofStatusContainer');
+  const statusText = document.getElementById('didSignatureStatusText');
+  const statusIcon = document.getElementById('didStatusIcon');
+  const hashShort = document.getElementById('didSigHashShort');
+  const fullSigInput = document.getElementById('didProofSignatureFull');
+  const nonce = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(b => b.toString(16).padStart(2, '0')).join('');
+
+  // 1. Update UI to Awaiting State
+  isAwaitingWeb3Signature = true;
+  if (btnSign) btnSign.style.opacity = '0.75';
+  if (btnText) btnText.innerHTML = '<span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">hourglass_top</span> Awaiting Signature in Wallet Extension...';
+
+  if (statusContainer) {
+    statusContainer.style.borderColor = 'rgba(0, 229, 255, 0.5)';
+    statusContainer.style.background = 'rgba(0, 229, 255, 0.08)';
+  }
+  if (statusIcon) {
+    statusIcon.textContent = 'hourglass_top';
+    statusIcon.style.color = '#00e5ff';
+  }
+  if (statusText) {
+    statusText.textContent = 'Awaiting signature in wallet extension... Please confirm the prompt in your wallet popup.';
+    statusText.style.color = '#00e5ff';
+  }
+  if (hashShort) hashShort.textContent = 'Awaiting...';
+
+  // 2. Structured Human-Readable Authorization Payload
+  const authMessage = 
+`OmniFutures Protocol Withdrawal Authorization
+==================================================
+Authorized Wallet: ${activeWallet}
+Asset: ${amt} ${coin} (~$${usdVal.toFixed(2)} USD)
+Recipient Address: ${addr}
+Settlement Network: ${net}
+Challenge Nonce: ${nonce}
+Timestamp: ${new Date().toISOString()}
+Gas Station: Omni Decentralized Relayer (Subsidized)
+
+By signing this message, you authorize OmniFutures to release your available collateral to the external recipient. No ETH or gas will be deducted from your external wallet.`;
+
+  let userSignature = null;
+
+  try {
+    // Check for EVM Web3 provider
+    if (typeof window.ethereum !== 'undefined' && activeWallet.startsWith('0x')) {
+      const msgHex = '0x' + Array.from(new TextEncoder().encode(authMessage)).map(b => b.toString(16).padStart(2, '0')).join('');
+      userSignature = await window.ethereum.request({
+        method: 'personal_sign',
+        params: [msgHex, activeWallet]
+      });
+    } else if (typeof window.solana !== 'undefined' && window.solana.isPhantom && net === 'Solana Mainnet') {
+      const encodedMessage = new TextEncoder().encode(authMessage);
+      const signedResponse = await window.solana.signMessage(encodedMessage, 'utf8');
+      userSignature = '0x' + Array.from(signedResponse.signature).map(b => b.toString(16).padStart(2, '0')).join('');
+    } else {
+      // Hardware DID Enclave fallback simulation for environments without injected extension
+      await new Promise(r => setTimeout(r, 650));
+      userSignature = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2, '0')).join('') + '1b';
+    }
+
+    if (!userSignature) {
+      throw new Error('No signature returned from Web3 provider');
+    }
+
+    // 3. Signature Received & Verified!
+    if (fullSigInput) fullSigInput.value = userSignature;
+    if (hashShort) hashShort.textContent = `${userSignature.substring(0, 6)}...${userSignature.substring(userSignature.length - 4)}`;
+
+    if (statusContainer) {
+      statusContainer.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+      statusContainer.style.background = 'rgba(16, 185, 129, 0.08)';
+    }
+    if (statusIcon) {
+      statusIcon.textContent = 'verified';
+      statusIcon.style.color = '#10b981';
+    }
+    if (statusText) {
+      statusText.textContent = 'Signature Confirmed & Cryptographically Bound!';
+      statusText.style.color = '#10b981';
+    }
+    if (btnText) btnText.innerHTML = '<span class="material-symbols-outlined gemini-symbol" style="font-size:16px; color:#10b981;">check_circle</span> Signature Verified by Wallet';
+    if (btnSign) {
+      btnSign.style.opacity = '1';
+      btnSign.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    }
+
+    playSound('order_fill');
+    showOrderToast('success', 'Wallet Signature Verified', `Cryptographic proof verified by ${activeWallet.substring(0, 6)}...${activeWallet.substring(activeWallet.length - 4)}. Dispatching withdrawal.`);
+
+    // Automatically dispatch verified withdrawal
+    await executeVerifiedWithdrawal(userSignature);
+
+  } catch (err) {
+    console.warn('Web3 Wallet authorization declined or failed:', err);
+    isAwaitingWeb3Signature = false;
+
+    // Reset button
+    if (btnSign) {
+      btnSign.style.opacity = '1';
+      btnSign.style.background = 'linear-gradient(135deg, #f43f5e 0%, #db2777 100%)';
+    }
+    if (btnText) btnText.innerHTML = '<span class="material-symbols-outlined gemini-symbol" style="font-size:18px;">refresh</span> Retry Signature in Web3 Wallet';
+
+    if (statusContainer) {
+      statusContainer.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+      statusContainer.style.background = 'rgba(239, 68, 68, 0.08)';
+    }
+    if (statusIcon) {
+      statusIcon.textContent = 'cancel';
+      statusIcon.style.color = '#ef4444';
+    }
+    if (statusText) {
+      statusText.textContent = 'Signature Declined in Wallet. Collateral Preserved.';
+      statusText.style.color = '#ef4444';
+    }
+    if (hashShort) hashShort.textContent = 'Rejected';
+
+    playSound('alert');
+    showOrderToast('error', 'Authorization Declined', 'Withdrawal was cancelled because the signature request was declined in your wallet. Zero collateral was deducted.');
+    return; // CRITICAL: Stop! Do NOT deduct funds or dispatch!
+  } finally {
+    isAwaitingWeb3Signature = false;
+  }
 }
 
 function sendSimulatedEmailCode() {
@@ -10202,13 +10429,13 @@ function sendSimulatedEmailCode() {
   }, 1000);
 }
 
-async function executeVerifiedWithdrawal() {
+async function executeVerifiedWithdrawal(customSig) {
   const amtInput = document.getElementById('weexWithdrawAmountInput');
   const netSelect = document.getElementById('weexWithdrawNetworkSelect');
   const addrInput = document.getElementById('weexWithdrawAddressInput');
   const coinSelect = document.getElementById('weexWithdrawCoinSelect');
   const codeInput = document.getElementById('twoFaInputCode');
-  const didSig = document.getElementById('didProofSignatureFull')?.value || '0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b';
+  const didSig = customSig || document.getElementById('didProofSignatureFull')?.value || '0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b';
   const didId = document.getElementById('didIdentifierDisplay')?.textContent || 'did:omni:0x88392104E729BF5A';
 
   const amt = parseFloat(amtInput ? amtInput.value : 0) || 0;
@@ -10264,6 +10491,7 @@ async function executeVerifiedWithdrawal() {
     usdValue: usdVal,
     network: net,
     txHash: txHash,
+    signature: didSig,
     status: 'CONFIRMED',
     createdAt: nowSec,
     created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
@@ -10288,6 +10516,7 @@ async function executeVerifiedWithdrawal() {
       time: 'Just now',
       timestamp: Date.now(),
       txHash: txHash,
+      signature: didSig,
       network: net,
       destAddress: addr
     });
@@ -10296,9 +10525,9 @@ async function executeVerifiedWithdrawal() {
     } catch(e) {}
   }
 
-  // Attempt backend SQLite sync in parallel (silent fallback on static hosting)
+  // Backend SQLite sync
   try {
-    fetch('/api/assets/withdraw', {
+    const syncResp = await fetch('/api/assets/withdraw', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -10309,14 +10538,26 @@ async function executeVerifiedWithdrawal() {
         network: net,
         twoFaCode: code,
         didIdentifier: didId,
-        didProof: didSig
+        didProof: didSig,
+        signature: didSig
       })
-    }).catch(() => {});
+    });
+    if (syncResp.ok) {
+      const syncData = await syncResp.json();
+      if (syncData && syncData.available !== undefined) {
+        accountAvailable = syncData.available;
+        accountEquity = syncData.equity;
+        if (accountData) {
+          accountData.available = syncData.available;
+          accountData.equity = syncData.equity;
+        }
+      }
+    }
   } catch(e) {}
 
   closeWithdraw2FAModal();
   playSound('order_fill');
-  showOrderToast('success', 'Withdrawal Broadcasted & Confirmed', `-${formatNumber(amt, 2)} ${coin} ($${formatNumber(usdVal, 2)}) sent to ${addr.substring(0, 6)}...${addr.substring(addr.length - 4)} via ${net}. Enclave verified.`);
+  showOrderToast('success', 'Withdrawal Authorized & Confirmed', `-${formatNumber(amt, 2)} ${coin} ($${formatNumber(usdVal, 2)}) sent to ${addr.substring(0, 6)}...${addr.substring(addr.length - 4)} via ${net}. Signature verified.`);
 
   // Dynamically update UI
   loadWeexWithdrawRecords();

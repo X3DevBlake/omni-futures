@@ -2648,15 +2648,24 @@
           </div>
         </div>
 
-        <div style="margin-bottom:16px; padding:10px 14px; background:rgba(0,229,255,0.05); border:1px solid rgba(0,229,255,0.2); border-radius:10px;">
-          <label style="display:flex; align-items:center; gap:9px; font-size:12.5px; color:#ffffff; cursor:pointer; font-weight:600; user-select:none;">
-            <input type="checkbox" id="chkWeexFastWithdraw" checked style="width:16px; height:16px; accent-color:#00e5ff; cursor:pointer;">
-            <span><span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px; vertical-align:middle;">bolt</span> Instant DID Fast-Outflow (Auto-Sign via Hardware Enclave)</span>
-          </label>
+        <!-- Web3 Wallet Authorization Notice Badge -->
+        <div style="margin-bottom:16px; padding:12px 14px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.25); border-radius:10px; display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:28px; height:28px; border-radius:8px; background:rgba(0,229,255,0.15); display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.4);">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">account_balance_wallet</span>
+            </div>
+            <div>
+              <div style="font-size:12px; color:#ffffff; font-weight:700;">Web3 Wallet Authorization Required</div>
+              <div style="font-size:11px; color:var(--text-secondary);">Disbursement requires cryptographic signature authorization from your wallet</div>
+            </div>
+          </div>
+          <span class="badge" style="background:rgba(16,185,129,0.18); color:#10b981; font-weight:700; font-size:10.5px; padding:3px 8px; border-radius:6px; border:1px solid rgba(16,185,129,0.3);">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:12px; vertical-align:middle;">lock</span> EIP-191
+          </span>
         </div>
 
-        <button class="btn" id="btnWeexSubmitWithdraw" onclick="openWeexWithdraw2FAModal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #f43f5e 0%, #db2777 100%); color:#ffffff; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(244,63,94,0.3); transition:all 0.2s;">
-          <span class="material-symbols-outlined gemini-symbol" style="font-size:18px; vertical-align:middle;">arrow_upward</span> Submit Withdrawal Request
+        <button class="btn" id="btnWeexSubmitWithdraw" onclick="openWeexWithdraw2FAModal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #00e5ff 0%, #0284c7 100%); color:#070b14; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(0,229,255,0.35); transition:all 0.2s;">
+          <span class="material-symbols-outlined gemini-symbol" style="font-size:18px; vertical-align:middle;">verified_user</span> Authorize & Submit Withdrawal
         </button>
       </div>
 
@@ -3221,82 +3230,111 @@
     </div>
   </div>
 
-  <!-- 2. Omni DID (Decentralized Identity) Security Engine Modal -->
+  <!-- 2. Omni Web3 Wallet Authorization & Security Engine Modal -->
   <div class="modal-overlay" id="modalWithdraw2FA" style="display:none;" onclick="if(event.target === this) closeWithdraw2FAModal()">
-    <div class="modal-card liquid-glass-card" style="max-width:520px; padding:26px; border:1px solid rgba(0,229,255,0.4); box-shadow:0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,229,255,0.15);">
+    <div class="modal-card liquid-glass-card" style="max-width:540px; padding:26px; border:1px solid rgba(0,229,255,0.4); box-shadow:0 20px 60px rgba(0,0,0,0.85), 0 0 35px rgba(0,229,255,0.18);">
       <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg, #00e5ff, #7c3aed); display:flex; align-items:center; justify-content:center; box-shadow:0 0 16px rgba(0,229,255,0.4);">
-            <span class="material-symbols-outlined gemini-symbol" style="font-size:22px; color:#ffffff;">fingerprint</span>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg, #00e5ff, #7c3aed); display:flex; align-items:center; justify-content:center; box-shadow:0 0 18px rgba(0,229,255,0.45);">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:22px; color:#ffffff;">verified_user</span>
           </div>
           <div>
-            <strong style="color:#ffffff; font-size:17.5px; letter-spacing:0.3px; display:block;">Omni DID Security Engine</strong>
-            <span style="font-size:11px; color:#00e5ff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">W3C Decentralized Identity & Biometric Enclave</span>
+            <strong style="color:#ffffff; font-size:17.5px; letter-spacing:0.3px; display:block;">Web3 Wallet Authorization</strong>
+            <span style="font-size:11px; color:#00e5ff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">EIP-191 Cryptographic Disbursement Signature</span>
           </div>
         </div>
         <button class="close-btn" onclick="closeWithdraw2FAModal()"><span class="material-symbols-outlined gemini-symbol" style="font-size:16px;">close</span></button>
       </div>
 
       <div class="modal-body" style="padding:0; display:flex; flex-direction:column; gap:14px;">
-        <!-- DID Identity Badge -->
-        <div style="background:rgba(10,15,29,0.75); padding:12px 14px; border-radius:10px; border:1px solid rgba(0,229,255,0.25); display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <div style="font-size:10.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Active Decentralized Identifier</div>
-            <div style="font-family:var(--font-gemini-mono); font-size:12.5px; color:#ffffff; font-weight:800; margin-top:2px;" id="didIdentifierDisplay">did:omni:0x88392104E729BF5A</div>
+        <!-- Connected Wallet Provider Card -->
+        <div style="background:rgba(10,15,29,0.8); padding:12px 16px; border-radius:12px; border:1px solid rgba(0,229,255,0.25); display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:30px; height:30px; border-radius:8px; background:rgba(0,229,255,0.12); display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.3);">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:17px;">account_balance_wallet</span>
+            </div>
+            <div>
+              <div style="font-size:10.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;" id="web3ProviderNameLabel">Connected Web3 Provider</div>
+              <div style="font-family:var(--font-gemini-mono); font-size:12.5px; color:#ffffff; font-weight:800; margin-top:2px;" id="didIdentifierDisplay">0x7a250d5630b4cf539739df2c5dacb4c659f2488d</div>
+            </div>
           </div>
-          <span class="badge" style="background:rgba(16,185,129,0.18); color:#10b981; font-weight:800; font-size:10px; padding:3px 8px; border-radius:6px; border:1px solid rgba(16,185,129,0.35);">
-            ● SECURE ENCLAVE
+          <span class="badge" id="web3ExtensionBadge" style="background:rgba(16,185,129,0.18); color:#10b981; font-weight:800; font-size:10px; padding:3px 8px; border-radius:6px; border:1px solid rgba(16,185,129,0.35);">
+            ● EXTENSION READY
           </span>
         </div>
 
-        <!-- Authorization Target Details -->
-        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
-          <span style="font-size:12px; color:var(--text-secondary);">Authorization Amount</span>
-          <strong class="text-cyan font-mono" style="font-size:15px;" id="twoFaAmountDisplay">500.00 USDT</strong>
+        <!-- Transaction Authorization Details Card -->
+        <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(148,163,184,0.15); border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
+            <span>Disbursement Amount:</span>
+            <strong class="text-cyan font-mono" style="font-size:14.5px;" id="twoFaAmountDisplay">500.00 USDT</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
+            <span>Recipient Address:</span>
+            <span class="font-mono text-white" id="wthModalDestDisplay" style="font-size:12px;">0x3892...8492</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
+            <span>Settlement Network:</span>
+            <span class="text-white" id="wthModalNetworkDisplay">Arbitrum One</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
+            <span>Network Gas Fee:</span>
+            <span class="text-green font-mono">0.00 OMNI (Subsidized Relayer)</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); border-top:1px solid rgba(148,163,184,0.1); padding-top:6px;">
+            <span>Challenge Nonce:</span>
+            <span class="font-mono" id="didChallengeNonceDisplay">Nonce: 0x8f2a...c914</span>
+          </div>
         </div>
 
-        <!-- Biometric / DID Key Signature Workstation -->
-        <div style="background:linear-gradient(135deg, rgba(0,229,255,0.06), rgba(124,58,237,0.08)); padding:14px; border-radius:12px; border:1px solid rgba(0,229,255,0.3);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <span style="font-size:12px; font-weight:700; color:#ffffff; display:flex; align-items:center; gap:6px;">
-              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">key</span> Cryptographic Hardware Signature
+        <!-- Primary Web3 Wallet Action Box -->
+        <div style="background:linear-gradient(135deg, rgba(0,229,255,0.08), rgba(124,58,237,0.1)); padding:16px; border-radius:14px; border:1px solid rgba(0,229,255,0.35);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:12.5px; font-weight:700; color:#ffffff; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:17px;">key</span> Cryptographic Wallet Signature
             </span>
-            <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-gemini-mono);" id="didChallengeNonceDisplay">Nonce: 0x8f2a...c914</span>
+            <span style="font-size:10.5px; color:#38bdf8; font-weight:700;" id="walletPromptHint">Requires Web3 Extension Popup</span>
           </div>
 
-          <button id="btnSignWithDidKey" onclick="triggerDidSignatureVerification()" style="width:100%; padding:12px; border-radius:10px; background:linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%); color:#ffffff; font-weight:800; font-size:13.5px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(0,229,255,0.3); transition:all 0.2s;">
-            <span class="material-symbols-outlined gemini-symbol" style="font-size:18px;">fingerprint</span>
-            <span id="btnSignWithDidText">Sign with Omni DID Key (Biometric / Passkey)</span>
+          <button id="btnSignWithWeb3Wallet" onclick="requestWeb3WalletSignature()" style="width:100%; padding:14px; border-radius:11px; background:linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%); color:#ffffff; font-weight:800; font-size:14px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:9px; box-shadow:0 4px 20px rgba(0,229,255,0.35); transition:all 0.2s;">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:19px;">fingerprint</span>
+            <span id="btnSignWithWeb3Text">Prompt Wallet & Sign Authorization</span>
           </button>
 
-          <!-- Dynamic Proof Status -->
-          <div id="didProofStatusContainer" style="margin-top:10px; display:flex; align-items:center; justify-content:space-between; background:rgba(10,15,29,0.8); padding:8px 12px; border-radius:8px; border:1px solid rgba(16,185,129,0.3);">
-            <div style="display:flex; align-items:center; gap:6px; font-size:11.5px; color:#10b981; font-weight:700;">
-              <span class="material-symbols-outlined gemini-symbol" style="font-size:16px;">verified</span>
-              <span id="didSignatureStatusText">DID Signature: Valid & Cryptographically Bound</span>
+          <!-- Live Dynamic Proof / Prompting Status -->
+          <div id="didProofStatusContainer" style="margin-top:12px; display:flex; align-items:center; justify-content:space-between; background:rgba(10,15,29,0.85); padding:10px 14px; border-radius:9px; border:1px solid rgba(16,185,129,0.3); transition:all 0.3s;">
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:#10b981; font-weight:700;" id="statusRowWrapper">
+              <span class="material-symbols-outlined gemini-symbol" id="didStatusIcon" style="font-size:18px;">verified</span>
+              <span id="didSignatureStatusText">Ready: Click above to authorize in your Web3 wallet extension</span>
             </div>
             <span class="font-mono" style="font-size:10.5px; color:var(--text-muted);" id="didSigHashShort">0x4a9e...f721</span>
           </div>
         </div>
 
-        <!-- Fallback DID Recovery Key / Authenticator input -->
-        <div class="weex-input-field-group" style="margin-top:2px;">
-          <div class="weex-input-field-label">
-            <span>Fallback DID Authenticator / Backup Code</span>
-            <span class="text-cyan" style="cursor:pointer;" id="twoFaSendCodeBtn" onclick="sendSimulatedEmailCode()">Request Encrypted OTP</span>
+        <!-- Alternative Enclave / Backup Option -->
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(255,255,255,0.03); border:1px dashed rgba(255,255,255,0.12); border-radius:9px;">
+          <div style="font-size:11.5px; color:var(--text-secondary);">
+            <span>No extension installed?</span>
           </div>
-          <div class="weex-input-box">
-            <input type="text" id="twoFaInputCode" placeholder="6-digit DID Authenticator backup code" maxlength="6" style="text-align:center; letter-spacing:4px; font-size:16px; font-family:var(--font-gemini-mono);" value="894210">
-          </div>
-          <!-- Hidden compatibility fields -->
-          <input type="hidden" id="twoFaEmailInputCode" value="123456">
-          <input type="hidden" id="didProofSignatureFull" value="0x4a9ef1829cd82710bb73e9182390192837482910ab3827192830192830192831b">
+          <button class="btn-ow-sub-action outline" id="btnSignWithDidKey" onclick="triggerDidSignatureVerification()" style="font-size:11px; padding:4px 10px; border-radius:6px; color:#38bdf8; border-color:rgba(56,189,248,0.3);">
+            <span class="material-symbols-outlined gemini-symbol" style="font-size:13px; vertical-align:middle;">fingerprint</span> Sign via Hardware DID Enclave
+          </button>
         </div>
 
-        <!-- Broadcast Button -->
-        <button class="btn" onclick="executeVerifiedWithdrawal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #00e5ff 0%, #0284c7 100%); color:#070b14; border:none; cursor:pointer; margin-top:4px; box-shadow:0 4px 20px rgba(0,229,255,0.4);">
-          Authorize & Broadcast via Omni DID Proof
+        <!-- Hidden compatibility fields -->
+        <input type="hidden" id="twoFaInputCode" value="894210">
+        <input type="hidden" id="twoFaEmailInputCode" value="123456">
+        <input type="hidden" id="didProofSignatureFull" value="">
+        <span id="twoFaSendCodeBtn" style="display:none;"></span>
+        <span id="btnSignWithDidText" style="display:none;"></span>
+
+        <!-- Final Relayer Dispatch Button (Enabled upon signature) -->
+        <button class="btn" id="btnBroadcastWithdrawal" onclick="executeVerifiedWithdrawal()" style="width:100%; padding:14px; font-size:15px; font-weight:800; border-radius:12px; background:linear-gradient(135deg, #00e5ff 0%, #0284c7 100%); color:#070b14; border:none; cursor:pointer; margin-top:2px; box-shadow:0 4px 20px rgba(0,229,255,0.4); display:none;">
+          <span class="material-symbols-outlined gemini-symbol" style="font-size:18px; vertical-align:middle;">send</span> Broadcast Withdrawal to Relayer
         </button>
+      </div>
+    </div>
+  </div>
       </div>
     </div>
   </div>
