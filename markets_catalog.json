@@ -1,7 +1,7 @@
 {
   "NVDA-USD": {
     "symbol": "NVDA-USD",
-    "name": "NVIDIA Corp Synthetic",
+    "name": "NVIDIA Corp Perpetual",
     "category": "stocks",
     "price": 224.41,
     "change24h": 3.2,
@@ -21,7 +21,7 @@
   },
   "TSLA-USD": {
     "symbol": "TSLA-USD",
-    "name": "Tesla Inc Synthetic",
+    "name": "Tesla Inc Perpetual",
     "category": "stocks",
     "price": 357.01,
     "change24h": 4.6,
@@ -41,7 +41,7 @@
   },
   "AAPL-USD": {
     "symbol": "AAPL-USD",
-    "name": "Apple Inc Synthetic",
+    "name": "Apple Inc Perpetual",
     "category": "stocks",
     "price": 324.96,
     "change24h": 1.25,
@@ -61,7 +61,7 @@
   },
   "MSFT-USD": {
     "symbol": "MSFT-USD",
-    "name": "Microsoft Synthetic",
+    "name": "Microsoft Perpetual",
     "category": "stocks",
     "price": 418.2,
     "change24h": 0.95,
@@ -81,7 +81,7 @@
   },
   "COIN-USD": {
     "symbol": "COIN-USD",
-    "name": "Coinbase Global Synthetic",
+    "name": "Coinbase Global Perpetual",
     "category": "stocks",
     "price": 174.96,
     "change24h": 6.8,
@@ -101,7 +101,7 @@
   },
   "MSTR-USD": {
     "symbol": "MSTR-USD",
-    "name": "MicroStrategy Synthetic",
+    "name": "MicroStrategy Perpetual",
     "category": "stocks",
     "price": 123.19,
     "change24h": 8.4,
@@ -141,7 +141,7 @@
   },
   "AMZN-USD": {
     "symbol": "AMZN-USD",
-    "name": "Amazon.com Synthetic",
+    "name": "Amazon.com Perpetual",
     "category": "stocks",
     "price": 212.4,
     "change24h": 1.4,
@@ -181,7 +181,7 @@
   },
   "META-USD": {
     "symbol": "META-USD",
-    "name": "Meta Platforms Synthetic",
+    "name": "Meta Platforms Perpetual",
     "category": "stocks",
     "price": 654.8,
     "change24h": 2.1,
@@ -201,7 +201,7 @@
   },
   "NFLX-USD": {
     "symbol": "NFLX-USD",
-    "name": "Netflix Inc Synthetic",
+    "name": "Netflix Inc Perpetual",
     "category": "stocks",
     "price": 875.4,
     "change24h": 1.8,
@@ -241,7 +241,7 @@
   },
   "BABA-USD": {
     "symbol": "BABA-USD",
-    "name": "Alibaba Group Synthetic",
+    "name": "Alibaba Group Perpetual",
     "category": "stocks",
     "price": 88.5,
     "change24h": 2.4,
@@ -261,7 +261,7 @@
   },
   "INTC-USD": {
     "symbol": "INTC-USD",
-    "name": "Intel Corp Synthetic",
+    "name": "Intel Corp Perpetual",
     "category": "stocks",
     "price": 21.4,
     "change24h": 1.6,
@@ -281,7 +281,7 @@
   },
   "DIS-USD": {
     "symbol": "DIS-USD",
-    "name": "Walt Disney Synthetic",
+    "name": "Walt Disney Perpetual",
     "category": "stocks",
     "price": 112.8,
     "change24h": 0.8,
@@ -301,7 +301,7 @@
   },
   "UBER-USD": {
     "symbol": "UBER-USD",
-    "name": "Uber Technologies Synthetic",
+    "name": "Uber Technologies Perpetual",
     "category": "stocks",
     "price": 74.2,
     "change24h": 2.2,
@@ -321,7 +321,7 @@
   },
   "HOOD-USD": {
     "symbol": "HOOD-USD",
-    "name": "Robinhood Markets Synthetic",
+    "name": "Robinhood Markets Perpetual",
     "category": "stocks",
     "price": 32.8,
     "change24h": 7.1,
@@ -361,7 +361,7 @@
   },
   "ARM-USD": {
     "symbol": "ARM-USD",
-    "name": "ARM Holdings Synthetic",
+    "name": "ARM Holdings Perpetual",
     "category": "stocks",
     "price": 138.4,
     "change24h": 4.1,
@@ -381,7 +381,7 @@
   },
   "TSM-USD": {
     "symbol": "TSM-USD",
-    "name": "Taiwan Semiconductor Synthetic",
+    "name": "Taiwan Semiconductor Perpetual",
     "category": "stocks",
     "price": 188.9,
     "change24h": 2.8,
@@ -401,7 +401,7 @@
   },
   "NIO-USD": {
     "symbol": "NIO-USD",
-    "name": "NIO Inc Synthetic",
+    "name": "NIO Inc Perpetual",
     "category": "stocks",
     "price": 4.15,
     "change24h": 3.4,
@@ -421,7 +421,7 @@
   },
   "LLY-USD": {
     "symbol": "LLY-USD",
-    "name": "Eli Lilly & Co Synthetic",
+    "name": "Eli Lilly & Co Perpetual",
     "category": "stocks",
     "price": 782.0,
     "change24h": 1.3,
@@ -441,7 +441,7 @@
   },
   "JPM-USD": {
     "symbol": "JPM-USD",
-    "name": "JPMorgan Chase Synthetic",
+    "name": "JPMorgan Chase Perpetual",
     "category": "stocks",
     "price": 242.5,
     "change24h": 0.9,
@@ -461,7 +461,7 @@
   },
   "V-USD": {
     "symbol": "V-USD",
-    "name": "Visa Inc Synthetic",
+    "name": "Visa Inc Perpetual",
     "category": "stocks",
     "price": 312.0,
     "change24h": 0.7,
@@ -481,7 +481,7 @@
   },
   "MA-USD": {
     "symbol": "MA-USD",
-    "name": "Mastercard Synthetic",
+    "name": "Mastercard Perpetual",
     "category": "stocks",
     "price": 528.0,
     "change24h": 0.85,
@@ -501,7 +501,7 @@
   },
   "PYPL-USD": {
     "symbol": "PYPL-USD",
-    "name": "PayPal Holdings Synthetic",
+    "name": "PayPal Holdings Perpetual",
     "category": "stocks",
     "price": 84.5,
     "change24h": 2.1,
@@ -521,7 +521,7 @@
   },
   "WMT-USD": {
     "symbol": "WMT-USD",
-    "name": "Walmart Inc Synthetic",
+    "name": "Walmart Inc Perpetual",
     "category": "stocks",
     "price": 92.4,
     "change24h": 0.6,
@@ -541,7 +541,7 @@
   },
   "COST-USD": {
     "symbol": "COST-USD",
-    "name": "Costco Wholesale Synthetic",
+    "name": "Costco Wholesale Perpetual",
     "category": "stocks",
     "price": 948.0,
     "change24h": 1.1,
@@ -561,7 +561,7 @@
   },
   "PG-USD": {
     "symbol": "PG-USD",
-    "name": "Procter & Gamble Synthetic",
+    "name": "Procter & Gamble Perpetual",
     "category": "stocks",
     "price": 172.0,
     "change24h": 0.4,
@@ -581,7 +581,7 @@
   },
   "JNJ-USD": {
     "symbol": "JNJ-USD",
-    "name": "Johnson & Johnson Synthetic",
+    "name": "Johnson & Johnson Perpetual",
     "category": "stocks",
     "price": 154.5,
     "change24h": 0.3,
@@ -601,7 +601,7 @@
   },
   "UNH-USD": {
     "symbol": "UNH-USD",
-    "name": "UnitedHealth Group Synthetic",
+    "name": "UnitedHealth Group Perpetual",
     "category": "stocks",
     "price": 588.0,
     "change24h": 1.0,
@@ -621,7 +621,7 @@
   },
   "HD-USD": {
     "symbol": "HD-USD",
-    "name": "Home Depot Synthetic",
+    "name": "Home Depot Perpetual",
     "category": "stocks",
     "price": 408.0,
     "change24h": 0.8,
@@ -641,7 +641,7 @@
   },
   "BAC-USD": {
     "symbol": "BAC-USD",
-    "name": "Bank of America Synthetic",
+    "name": "Bank of America Perpetual",
     "category": "stocks",
     "price": 45.2,
     "change24h": 1.2,
@@ -661,7 +661,7 @@
   },
   "XOM-USD": {
     "symbol": "XOM-USD",
-    "name": "Exxon Mobil Synthetic",
+    "name": "Exxon Mobil Perpetual",
     "category": "stocks",
     "price": 118.4,
     "change24h": -0.6,
@@ -681,7 +681,7 @@
   },
   "CVX-USD": {
     "symbol": "CVX-USD",
-    "name": "Chevron Corp Synthetic",
+    "name": "Chevron Corp Perpetual",
     "category": "stocks",
     "price": 154.2,
     "change24h": -0.8,
@@ -701,7 +701,7 @@
   },
   "CRM-USD": {
     "symbol": "CRM-USD",
-    "name": "Salesforce Inc Synthetic",
+    "name": "Salesforce Inc Perpetual",
     "category": "stocks",
     "price": 332.0,
     "change24h": 1.7,
@@ -721,7 +721,7 @@
   },
   "ORCL-USD": {
     "symbol": "ORCL-USD",
-    "name": "Oracle Corp Synthetic",
+    "name": "Oracle Corp Perpetual",
     "category": "stocks",
     "price": 184.5,
     "change24h": 2.4,
@@ -741,7 +741,7 @@
   },
   "CSCO-USD": {
     "symbol": "CSCO-USD",
-    "name": "Cisco Systems Synthetic",
+    "name": "Cisco Systems Perpetual",
     "category": "stocks",
     "price": 58.2,
     "change24h": 0.5,
@@ -761,7 +761,7 @@
   },
   "ADBE-USD": {
     "symbol": "ADBE-USD",
-    "name": "Adobe Inc Synthetic",
+    "name": "Adobe Inc Perpetual",
     "category": "stocks",
     "price": 498.0,
     "change24h": 1.4,
@@ -781,7 +781,7 @@
   },
   "QCOM-USD": {
     "symbol": "QCOM-USD",
-    "name": "Qualcomm Inc Synthetic",
+    "name": "Qualcomm Inc Perpetual",
     "category": "stocks",
     "price": 162.0,
     "change24h": 2.1,
@@ -801,7 +801,7 @@
   },
   "TXN-USD": {
     "symbol": "TXN-USD",
-    "name": "Texas Instruments Synthetic",
+    "name": "Texas Instruments Perpetual",
     "category": "stocks",
     "price": 198.0,
     "change24h": 1.2,
@@ -821,7 +821,7 @@
   },
   "AVGO-USD": {
     "symbol": "AVGO-USD",
-    "name": "Broadcom Inc Synthetic",
+    "name": "Broadcom Inc Perpetual",
     "category": "stocks",
     "price": 168.5,
     "change24h": 3.4,
@@ -841,7 +841,7 @@
   },
   "MU-USD": {
     "symbol": "MU-USD",
-    "name": "Micron Technology Synthetic",
+    "name": "Micron Technology Perpetual",
     "category": "stocks",
     "price": 98.4,
     "change24h": 4.2,
@@ -861,7 +861,7 @@
   },
   "NOW-USD": {
     "symbol": "NOW-USD",
-    "name": "ServiceNow Inc Synthetic",
+    "name": "ServiceNow Inc Perpetual",
     "category": "stocks",
     "price": 1024.0,
     "change24h": 1.9,
@@ -881,7 +881,7 @@
   },
   "PANW-USD": {
     "symbol": "PANW-USD",
-    "name": "Palo Alto Networks Synthetic",
+    "name": "Palo Alto Networks Perpetual",
     "category": "stocks",
     "price": 388.0,
     "change24h": 2.5,
@@ -901,7 +901,7 @@
   },
   "CRWD-USD": {
     "symbol": "CRWD-USD",
-    "name": "CrowdStrike Holdings Synthetic",
+    "name": "CrowdStrike Holdings Perpetual",
     "category": "stocks",
     "price": 342.0,
     "change24h": 3.1,
@@ -921,7 +921,7 @@
   },
   "SNOW-USD": {
     "symbol": "SNOW-USD",
-    "name": "Snowflake Inc Synthetic",
+    "name": "Snowflake Inc Perpetual",
     "category": "stocks",
     "price": 164.0,
     "change24h": 3.6,
@@ -941,7 +941,7 @@
   },
   "SQ-USD": {
     "symbol": "SQ-USD",
-    "name": "Block Inc Synthetic",
+    "name": "Block Inc Perpetual",
     "category": "stocks",
     "price": 88.2,
     "change24h": 4.4,
@@ -961,7 +961,7 @@
   },
   "SOFI-USD": {
     "symbol": "SOFI-USD",
-    "name": "SoFi Technologies Synthetic",
+    "name": "SoFi Technologies Perpetual",
     "category": "stocks",
     "price": 14.8,
     "change24h": 5.2,
@@ -981,7 +981,7 @@
   },
   "RIVN-USD": {
     "symbol": "RIVN-USD",
-    "name": "Rivian Automotive Synthetic",
+    "name": "Rivian Automotive Perpetual",
     "category": "stocks",
     "price": 11.2,
     "change24h": 4.1,
@@ -1001,7 +1001,7 @@
   },
   "LCID-USD": {
     "symbol": "LCID-USD",
-    "name": "Lucid Group Synthetic",
+    "name": "Lucid Group Perpetual",
     "category": "stocks",
     "price": 2.18,
     "change24h": 3.2,
@@ -1021,7 +1021,7 @@
   },
   "BNTX-USD": {
     "symbol": "BNTX-USD",
-    "name": "BioNTech SE Synthetic",
+    "name": "BioNTech SE Perpetual",
     "category": "stocks",
     "price": 112.0,
     "change24h": 1.8,
@@ -1041,7 +1041,7 @@
   },
   "SPY-USD": {
     "symbol": "SPY-USD",
-    "name": "S&P 500 ETF Trust Synthetic",
+    "name": "S&P 500 ETF Trust Perpetual",
     "category": "etfs",
     "price": 765.16,
     "change24h": 0.85,

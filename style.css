@@ -3593,8 +3593,7 @@ body {
 
 /* 1. Remove all SFX visuals */
 #omni-audio-pill-ctrl,
-.omni-audio-pill-container,
-#soundToggleBtn {
+.omni-audio-pill-container {
   display: none !important;
 }
 

@@ -490,6 +490,7 @@ function getTokenVectorSvg(symbol = '', category = 'crypto', size = 20) {
   const clean = (symbol || '').toUpperCase().replace(/-USDT$|-USD$/, '');
   
   const vectorMap = {
+    // Top Cryptos
     'BTC': '#token-vector-btc',
     'ETH': '#token-vector-eth',
     'SOL': '#token-vector-sol',
@@ -501,34 +502,81 @@ function getTokenVectorSvg(symbol = '', category = 'crypto', size = 20) {
     '1000PEPE': '#token-vector-pepe',
     'SHIB': '#token-vector-shib',
     '1000SHIB': '#token-vector-shib',
+    'XRP': '#token-vector-xrp',
+    'ADA': '#token-vector-ada',
+    'AVAX': '#token-vector-avax',
+    'LINK': '#token-vector-link',
+    'SUI': '#token-vector-sui',
+    'NEAR': '#token-vector-near',
+    'DOT': '#token-vector-dot',
+    'TRX': '#token-vector-trx',
+    'UNI': '#token-vector-uni',
+    'APT': '#token-vector-apt',
+    'TON': '#token-vector-ton',
+    'WIF': '#token-vector-wif',
+    'BONK': '#token-vector-bonk',
+    'FLOKI': '#token-vector-floki',
+    'OMNI': '#omni-all-seeing-eye-token',
+    'SOMNI': '#token-vector-somni',
+    // Equities & Stocks
     'NVDA': '#token-vector-nvda',
     'TSLA': '#token-vector-tsla',
     'AAPL': '#token-vector-aapl',
-    'OMNI': '#omni-all-seeing-eye-token'
+    'MSFT': '#token-vector-msft',
+    'GOOGL': '#token-vector-googl',
+    'GOOG': '#token-vector-googl',
+    'AMZN': '#token-vector-amzn',
+    'META': '#token-vector-meta',
+    'AMD': '#token-vector-amd',
+    'COIN': '#token-vector-coin',
+    'PLTR': '#token-vector-pltr',
+    'BABA': '#token-vector-baba',
+    'MSTR': '#token-vector-mstr',
+    'GOLD': '#token-vector-gold',
+    'XAU': '#token-vector-gold',
+    'OIL': '#token-vector-oil',
+    'CRUDE': '#token-vector-oil',
+    // ETFs & Indices
+    'SPY': '#token-vector-spy',
+    'QQQ': '#token-vector-qqq',
+    'IWM': '#token-vector-iwm',
+    'DIA': '#token-vector-dia',
+    'GLD': '#token-vector-gld',
+    'SLV': '#token-vector-slv',
+    'IBIT': '#token-vector-ibit',
+    'ETHA': '#token-vector-etha',
+    'TLT': '#token-vector-tlt',
+    'ARKK': '#token-vector-arkk'
   };
 
   if (vectorMap[clean]) {
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="vertical-align:middle; flex-shrink:0; border-radius:50%;"><use href="${vectorMap[clean]}"/></svg>`;
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="vertical-align:middle; flex-shrink:0; border-radius:50%; box-shadow:0 0 8px rgba(0,229,255,0.25);"><use href="${vectorMap[clean]}"/></svg>`;
   }
 
-  let bgGrad = 'linear-gradient(135deg, #00e5ff 0%, #7c3aed 100%)';
+  let bgGrad = 'linear-gradient(135deg, rgba(0,229,255,0.3) 0%, rgba(124,58,237,0.4) 100%)';
+  let borderCol = 'rgba(0,229,255,0.5)';
   const cat = (category || '').toLowerCase();
   if (cat === 'meme') {
-    bgGrad = 'linear-gradient(135deg, #f43f5e 0%, #ec4899 100%)';
+    bgGrad = 'linear-gradient(135deg, rgba(244,63,94,0.35) 0%, rgba(236,72,153,0.45) 100%)';
+    borderCol = 'rgba(244,63,94,0.6)';
   } else if (cat === 'ai') {
-    bgGrad = 'linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)';
+    bgGrad = 'linear-gradient(135deg, rgba(168,85,247,0.35) 0%, rgba(59,130,246,0.45) 100%)';
+    borderCol = 'rgba(168,85,247,0.6)';
   } else if (cat === 'stocks' || cat === 'etfs') {
-    bgGrad = 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)';
+    bgGrad = 'linear-gradient(135deg, rgba(16,185,129,0.35) 0%, rgba(6,182,212,0.45) 100%)';
+    borderCol = 'rgba(16,185,129,0.6)';
   } else if (cat === 'bonds' || cat === 'commodities') {
-    bgGrad = 'linear-gradient(135deg, #ffd700 0%, #f59e0b 100%)';
+    bgGrad = 'linear-gradient(135deg, rgba(255,215,0,0.35) 0%, rgba(245,158,11,0.45) 100%)';
+    borderCol = 'rgba(255,215,0,0.6)';
   } else if (cat === 'defi') {
-    bgGrad = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
+    bgGrad = 'linear-gradient(135deg, rgba(59,130,246,0.35) 0%, rgba(29,78,216,0.45) 100%)';
+    borderCol = 'rgba(59,130,246,0.6)';
   }
 
   const label = clean.length <= 4 ? clean : clean.slice(0, 3);
-  const fontSize = label.length > 3 ? Math.round(size * 0.32) : Math.round(size * 0.42);
+  const fontSize = label.length > 3 ? Math.round(size * 0.30) : Math.round(size * 0.38);
 
-  return `<div style="width:${size}px; height:${size}px; border-radius:50%; background:${bgGrad}; display:inline-flex; align-items:center; justify-content:center; color:#ffffff; font-weight:900; font-size:${fontSize}px; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.35); text-transform:uppercase; letter-spacing:-0.5px; border:1px solid rgba(255,255,255,0.25);">${label}</div>`;
+  return `<div class="gemini-liquid-token-badge" style="width:${size}px; height:${size}px; border-radius:50%; background:${bgGrad}; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); display:inline-flex; align-items:center; justify-content:center; color:#ffffff; font-weight:900; font-size:${fontSize}px; flex-shrink:0; box-shadow:0 0 10px rgba(0,229,255,0.25); text-transform:uppercase; letter-spacing:-0.5px; border:1px solid ${borderCol};">${label}</div>`;
 }
 
 // Core multi-field weighted scoring and sorting algorithm
@@ -1281,6 +1329,8 @@ function updateTickerHeader() {
 
   document.getElementById("tickerSymbol").textContent = mkt.symbol;
   document.getElementById("tickerTypeTag").textContent = mkt.category.toUpperCase();
+  const iconEl = document.getElementById("tickerTokenVector");
+  if (iconEl) iconEl.innerHTML = getTokenVectorSvg(mkt.symbol, mkt.category, 20);
   
   const priceEl = document.getElementById("tickerPrice");
   priceEl.textContent = formatNumber(mkt.price, mkt.precision);
@@ -2821,7 +2871,10 @@ function renderOpenOrdersTable() {
           <div class="text-muted" style="font-size:10px;">${dateStr}</div>
         </td>
         <td>
-          <div style="font-weight:700; color:#fff;">${o.symbol}</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${getTokenVectorSvg(o.symbol, 'crypto', 18)}
+            <div style="font-weight:700; color:#fff;">${o.symbol}</div>
+          </div>
           <div class="text-muted" style="font-size:10px;">${o.orderMode || 'FUTURES'} ${o.leverage || 20}x</div>
         </td>
         <td>
@@ -3280,7 +3333,12 @@ async function loadPositions() {
 
     return `
       <tr>
-        <td><strong>${p.symbol}</strong></td>
+        <td>
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${getTokenVectorSvg(p.symbol, 'crypto', 18)}
+            <strong>${p.symbol}</strong>
+          </div>
+        </td>
         <td><span class="${sideClass}">${sideArrow} ${p.side} ${p.leverage}x</span> <span style="font-size:10px; color:#94a3b8;">Cross</span></td>
         <td>
           <span class="font-mono">${p.size} ${baseSym}</span>
@@ -8088,7 +8146,7 @@ function initGlobalLiquidationStream() {
     binanceLiqWs.onerror = () => {
       const badge = document.getElementById("binanceLiqStatusBadge");
       if (badge) {
-        badge.innerHTML = `<span class="pulse-dot" style="background:#f59e0b;"></span> STREAM RESTRICTED (SYNTHETIC FALLBACK)`;
+        badge.innerHTML = `<span class="pulse-dot" style="background:#f59e0b;"></span> STREAM RESTRICTED (OFFLINE FALLBACK)`;
         badge.className = "badge-tag text-gold";
       }
     };
@@ -9362,6 +9420,8 @@ function calcWeexExpressPayout() {
   const fiatAmt = parseFloat(fiatInput ? fiatInput.value : 500) || 0;
   const fiatCur = fiatSelect ? fiatSelect.value : 'USD';
   const crypto = cryptoSelect ? cryptoSelect.value : 'USDT';
+  const cryptoVectorEl = document.getElementById('weexExpressCryptoVector');
+  if (cryptoVectorEl) cryptoVectorEl.innerHTML = getTokenVectorSvg(crypto, 'crypto', 20);
 
   const fiatRateToUsd = weexFiatRates[fiatCur] || 1.0;
   const usdAmt = fiatAmt * fiatRateToUsd;
@@ -9670,6 +9730,9 @@ function updateWeexDepositDetails() {
   const coin = coinSelect ? coinSelect.value : 'USDT';
   const net = netSelect ? netSelect.value : 'Arbitrum One';
 
+  const coinVectorEl = document.getElementById('weexDepositCoinVector');
+  if (coinVectorEl) coinVectorEl.innerHTML = getTokenVectorSvg(coin, 'crypto', 22);
+
   let addr = weexDepositAddresses[net] || weexDepositAddresses['Arbitrum One'];
   if (coin === 'BTC') addr = 'bc1q9v7m2k0p4x6t8r9y1z3w5s7d8f9g';
   if (coin === 'SOL') addr = '7oP9vM5qX4rK8uN2tW1zY8xL0eP7aK5OMNI99';
@@ -9922,6 +9985,11 @@ function switchWeexWithdrawSubTab(subTab) {
 }
 
 function updateWeexWithdrawCalculations() {
+  const coinSelect = document.getElementById('weexWithdrawCoinSelect');
+  const coin = coinSelect ? coinSelect.value : 'USDT';
+  const coinVectorEl = document.getElementById('weexWithdrawCoinVector');
+  if (coinVectorEl) coinVectorEl.innerHTML = getTokenVectorSvg(coin, 'crypto', 22);
+
   const netSelect = document.getElementById('weexWithdrawNetworkSelect');
   const amtInput = document.getElementById('weexWithdrawAmountInput');
   const feeDisplay = document.getElementById('weexWithdrawFeeDisplay');
@@ -10323,15 +10391,27 @@ function renderWeexHoldingsTable() {
   const omniInfo = getLiveMarketInfo('OMNI');
   const dogeInfo = getLiveMarketInfo('DOGE');
   const pepeInfo = getLiveMarketInfo('PEPE');
+  const nvdaInfo = getLiveMarketInfo('NVDA');
+  const tslaInfo = getLiveMarketInfo('TSLA');
+  const aaplInfo = getLiveMarketInfo('AAPL');
+  const msftInfo = getLiveMarketInfo('MSFT');
+  const spyInfo = getLiveMarketInfo('SPY');
+  const qqqInfo = getLiveMarketInfo('QQQ');
 
   const holdings = [
-    { asset: 'OMNI', name: 'Omni Network (Native L1)', net: 'Omni EVM / Arbitrum', balance: 25000.00, avail: 25000.00, inOrder: 0.00, price: omniInfo.price, change: 4.85 },
-    { asset: 'USDT', name: 'Tether USD', net: 'Arbitrum One', balance: accountEquity * 0.75, avail: accountAvailable * 0.75, inOrder: 798.79, price: 1.00, change: 0.01 },
-    { asset: 'BTC', name: 'Bitcoin', net: 'Native / Taproot', balance: 1.842, avail: 1.842, inOrder: 0.00, price: btcInfo.price, change: btcInfo.change },
-    { asset: 'ETH', name: 'Ethereum', net: 'Arbitrum / ERC20', balance: 14.50, avail: 14.50, inOrder: 0.00, price: ethInfo.price, change: ethInfo.change },
-    { asset: 'SOL', name: 'Solana', net: 'SPL Network', balance: 120.00, avail: 120.00, inOrder: 0.00, price: solInfo.price, change: solInfo.change },
-    { asset: 'DOGE', name: 'Dogecoin', net: 'Native Doge', balance: 25000.00, avail: 25000.00, inOrder: 0.00, price: dogeInfo.price, change: dogeInfo.change },
-    { asset: 'PEPE', name: 'Pepe', net: 'ERC20 / Arbitrum', balance: 500000000.00, avail: 500000000.00, inOrder: 0.00, price: pepeInfo.price, change: pepeInfo.change }
+    { asset: 'OMNI', name: 'Omni Network (Native L1)', net: 'Omni EVM / Arbitrum', balance: 25000.00, avail: 25000.00, inOrder: 0.00, price: omniInfo.price, change: 4.85, category: 'crypto' },
+    { asset: 'USDT', name: 'Tether USD', net: 'Arbitrum One', balance: accountEquity * 0.75, avail: accountAvailable * 0.75, inOrder: 798.79, price: 1.00, change: 0.01, category: 'crypto' },
+    { asset: 'BTC', name: 'Bitcoin', net: 'Native / Taproot', balance: 1.842, avail: 1.842, inOrder: 0.00, price: btcInfo.price, change: btcInfo.change, category: 'crypto' },
+    { asset: 'ETH', name: 'Ethereum', net: 'Arbitrum / ERC20', balance: 14.50, avail: 14.50, inOrder: 0.00, price: ethInfo.price, change: ethInfo.change, category: 'crypto' },
+    { asset: 'SOL', name: 'Solana', net: 'SPL Network', balance: 120.00, avail: 120.00, inOrder: 0.00, price: solInfo.price, change: solInfo.change, category: 'crypto' },
+    { asset: 'DOGE', name: 'Dogecoin', net: 'Native Doge', balance: 25000.00, avail: 25000.00, inOrder: 0.00, price: dogeInfo.price, change: dogeInfo.change, category: 'meme' },
+    { asset: 'PEPE', name: 'Pepe', net: 'ERC20 / Arbitrum', balance: 500000000.00, avail: 500000000.00, inOrder: 0.00, price: pepeInfo.price, change: pepeInfo.change, category: 'meme' },
+    { asset: 'NVDA', name: 'Nvidia Perpetual Stock', net: 'TradFi Perpetual', balance: 45.00, avail: 45.00, inOrder: 0.00, price: nvdaInfo.price || 118.50, change: nvdaInfo.change || 3.15, category: 'stocks' },
+    { asset: 'TSLA', name: 'Tesla Perpetual Stock', net: 'TradFi Perpetual', balance: 20.00, avail: 20.00, inOrder: 0.00, price: tslaInfo.price || 215.20, change: tslaInfo.change || -2.40, category: 'stocks' },
+    { asset: 'AAPL', name: 'Apple Inc Perpetual Stock', net: 'TradFi Perpetual', balance: 35.00, avail: 35.00, inOrder: 0.00, price: aaplInfo.price || 224.80, change: aaplInfo.change || 0.85, category: 'stocks' },
+    { asset: 'MSFT', name: 'Microsoft Perpetual Stock', net: 'TradFi Perpetual', balance: 18.00, avail: 18.00, inOrder: 0.00, price: msftInfo.price || 418.00, change: msftInfo.change || 1.15, category: 'stocks' },
+    { asset: 'SPY', name: 'SPDR S&P 500 ETF Trust', net: 'Index ETF Perpetual', balance: 12.00, avail: 12.00, inOrder: 0.00, price: spyInfo.price || 545.20, change: spyInfo.change || 0.62, category: 'etfs' },
+    { asset: 'QQQ', name: 'Invesco QQQ Trust (Nasdaq)', net: 'Tech ETF Perpetual', balance: 22.00, avail: 22.00, inOrder: 0.00, price: qqqInfo.price || 470.50, change: qqqInfo.change || 1.18, category: 'etfs' }
   ];
 
   const filtered = holdings.filter(h => {
@@ -10348,8 +10428,8 @@ function renderWeexHoldingsTable() {
       <tr>
         <td>
           <div style="display:flex; align-items:center; gap:10px;">
-            <div class="gemini-token-icon-badge" style="width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg, rgba(0,229,255,0.18), rgba(168,85,247,0.25)); border:1px solid rgba(0,229,255,0.35); display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 10px rgba(0,229,255,0.25);">
-              <svg class="gemini-sparkle-mini" width="14" height="14" viewBox="0 0 24 24"><use href="#gemini-sparkle-symbol"/></svg>
+            <div style="flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+              ${getTokenVectorSvg(h.asset, h.category, 28)}
             </div>
             <div>
               <div style="font-weight:800; color:#ffffff;">${h.asset}</div>
@@ -10559,11 +10639,11 @@ function loadWeexMarketsTable(searchQuery = '') {
       { symbol: 'OMNI-USDT', name: 'Omni Network Perpetual', price: weexAssetPrices.OMNI, change: 8.92, high: 15.20, low: 13.10, turnover: 412000500, category: 'OMNI', isOmni: true },
       { symbol: 'PEPE-USDT', name: 'Pepe 1000x Perp', price: weexAssetPrices.PEPE, change: 14.80, high: 0.0000095, low: 0.0000078, turnover: 890400200, category: 'MEME', isOmni: false },
       { symbol: 'DOGE-USDT', name: 'Dogecoin Perpetual', price: weexAssetPrices.DOGE, change: -1.25, high: 0.148, low: 0.139, turnover: 642000100, category: 'LOSERS', isOmni: false },
-      { symbol: 'NVDA-USDT', name: 'Nvidia Synthetic Stock', price: weexAssetPrices.NVDA, change: 3.15, high: 121.50, low: 115.80, turnover: 580200300, category: 'STOCKS', isOmni: false },
-      { symbol: 'TSLA-USDT', name: 'Tesla Synthetic Stock', price: weexAssetPrices.TSLA, change: -2.40, high: 220.00, low: 211.50, turnover: 410500200, category: 'STOCKS', isOmni: false },
-      { symbol: 'AAPL-USDT', name: 'Apple Inc Synthetic', price: weexAssetPrices.AAPL, change: 0.85, high: 226.40, low: 223.10, turnover: 320100400, category: 'STOCKS', isOmni: false },
+      { symbol: 'NVDA-USDT', name: 'Nvidia Perpetual Stock', price: weexAssetPrices.NVDA, change: 3.15, high: 121.50, low: 115.80, turnover: 580200300, category: 'STOCKS', isOmni: false },
+      { symbol: 'TSLA-USDT', name: 'Tesla Perpetual Stock', price: weexAssetPrices.TSLA, change: -2.40, high: 220.00, low: 211.50, turnover: 410500200, category: 'STOCKS', isOmni: false },
+      { symbol: 'AAPL-USDT', name: 'Apple Inc Perpetual Stock', price: weexAssetPrices.AAPL, change: 0.85, high: 226.40, low: 223.10, turnover: 320100400, category: 'STOCKS', isOmni: false },
       { symbol: 'GOLD-USDT', name: 'XAU Gold Perpetual', price: weexAssetPrices.GOLD, change: 0.42, high: 2525.00, low: 2505.00, turnover: 910400200, category: 'HOT', isOmni: false },
-      { symbol: 'CRUDE-USDT', name: 'WTI Crude Oil Synth', price: weexAssetPrices.CRUDE, change: -0.92, high: 76.20, low: 73.90, turnover: 280100900, category: 'STOCKS', isOmni: false }
+      { symbol: 'CRUDE-USDT', name: 'WTI Crude Oil Perpetual', price: weexAssetPrices.CRUDE, change: -0.92, high: 76.20, low: 73.90, turnover: 280100900, category: 'STOCKS', isOmni: false }
     ];
   }
 
