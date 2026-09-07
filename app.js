@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const disp = document.getElementById("walletAddressDisplay");
     if (disp) {
       const icon = savedWallet.startsWith("0x") ? `<span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:16px;">account_balance_wallet</span>` : `<span class="material-symbols-outlined gemini-symbol gemini-grad-purple" style="font-size:16px;">token</span>`;
-      disp.textContent = `${icon} ${savedWallet.slice(0, 6)}...${savedWallet.slice(-4)}`;
+      disp.innerHTML = `${icon} ${savedWallet.slice(0, 6)}...${savedWallet.slice(-4)}`;
     }
   }
 
@@ -4107,7 +4107,7 @@ function setConnectedWallet(addr, provider = "Web3") {
   const disp = document.getElementById("walletAddressDisplay");
   if (disp) {
     const icon = `<span class="material-symbols-outlined gemini-symbol gemini-grad-gold" style="font-size:16px;">account_balance_wallet</span>`;
-    disp.textContent = `${icon} ${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    disp.innerHTML = `${icon} ${addr.slice(0, 6)}...${addr.slice(-4)}`;
   }
 
   // Update connected wallet display in modal
@@ -9942,30 +9942,74 @@ function simulateLiveDepositInflow() {
 async function addOmniNetworkToWallet() {
   if (window.ethereum) {
     try {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: '0x9B8D', // Chain ID 39821
-          chainName: 'OMNI Network Mainnet',
-          nativeCurrency: { name: 'OMNI Native Token', symbol: 'OMNI', decimals: 18 },
-          rpcUrls: ['https://rpc.omni-network-39821.web.app', 'https://omni-network-39821.web.app/rpc'],
-          blockExplorerUrls: ['https://omni-explorer-39821.web.app']
-        }]
-      });
-      showOrderToast('success', 'Omni Network Connected', 'OMNI Network Mainnet (Chain ID: 39821) successfully added to your Web3 wallet!');
-      playSound('order_fill');
+      // 1. Request account connection if not yet connected
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts && accounts[0]) {
+        const activeAddr = accounts[0];
+        if (typeof setConnectedWallet === 'function') {
+          setConnectedWallet(activeAddr, "MetaMask");
+        }
+        const withdrawAddrInput = document.getElementById('weexWithdrawAddressInput');
+        if (withdrawAddrInput) {
+          withdrawAddrInput.value = activeAddr;
+          withdrawAddrInput.dispatchEvent(new Event('input'));
+        }
+        const statusPill = document.getElementById('metaMaskStatusBadge');
+        if (statusPill) {
+          statusPill.textContent = `Connected: ${activeAddr.slice(0, 6)}...${activeAddr.slice(-4)}`;
+          statusPill.style.color = '#10b981';
+        }
+      }
+
+      // 2. Try switching to OMNI Network Mainnet
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x9B8D' }] // 39821
+        });
+        showOrderToast('success', 'OMNI Network Active', 'Switched to OMNI Network Mainnet (Chain ID: 39821)!');
+        playSound('order_fill');
+      } catch (switchError) {
+        // Error code 4902 means the chain has not been added to MetaMask yet
+        if (switchError.code === 4902 || (switchError.message && (switchError.message.toLowerCase().includes('unrecognized') || switchError.message.toLowerCase().includes('not added')))) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: '0x9B8D', // Chain ID 39821
+              chainName: 'OMNI Network Mainnet',
+              nativeCurrency: { name: 'OMNI Native Token', symbol: 'OMNI', decimals: 18 },
+              rpcUrls: ['https://rpc.omni-network-39821.web.app', 'https://omni-network-39821.web.app/rpc'],
+              blockExplorerUrls: ['https://omni-explorer-39821.web.app']
+            }]
+          });
+          showOrderToast('success', 'OMNI Network Connected', 'OMNI Network Mainnet (Chain ID: 39821) successfully added to MetaMask!');
+          playSound('order_fill');
+        } else {
+          throw switchError;
+        }
+      }
+
+      // Update network button text
+      const btnHeader = document.getElementById('headerOmniNetBtnText');
+      if (btnHeader) btnHeader.textContent = 'OMNI Network (39821)';
+
     } catch (err) {
-      showOrderToast('info', 'Omni Network Parameters', 'Chain ID: 39821 | RPC: https://rpc.omni-network-39821.web.app');
+      console.error('addOmniNetworkToWallet error:', err);
+      if (err.code === 4001) {
+        showOrderToast('info', 'Request Declined', 'User cancelled network connection in MetaMask.');
+      } else {
+        showOrderToast('info', 'OMNI Network Parameters', 'Chain ID: 39821 (0x9B8D) | RPC: https://rpc.omni-network-39821.web.app');
+      }
     }
   } else {
-    showOrderToast('info', 'Omni Network RPC', 'Network: OMNI Network Mainnet | Chain ID: 39821 | Currency: OMNI');
+    showOrderToast('info', 'MetaMask Required', 'Please install or open the MetaMask extension in Google Chrome.');
   }
 }
 
 async function addOmniTokenToWallet() {
   if (window.ethereum) {
     try {
-      await window.ethereum.request({
+      const wasAdded = await window.ethereum.request({
         method: 'wallet_watchAsset',
         params: {
           type: 'ERC20',
@@ -9977,13 +10021,54 @@ async function addOmniTokenToWallet() {
           }
         }
       });
-      showOrderToast('success', 'Token Added', '$OMNI Token (0x638A...1B44) added to Web3 wallet asset tracking.');
-      playSound('order_fill');
+      if (wasAdded) {
+        showOrderToast('success', 'Token Added', '$OMNI Token (0x638A...1B44) added to MetaMask!');
+        playSound('order_fill');
+      }
     } catch (err) {
+      console.warn('addOmniTokenToWallet rejected:', err);
       copyOmniContractAddress();
     }
   } else {
     copyOmniContractAddress();
+  }
+}
+
+async function addUsdtTokenToWallet() {
+  if (window.ethereum) {
+    try {
+      const wasAdded = await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: '0x389276532D9e7Ea7917056630b53f561A2837421',
+            symbol: 'USDT',
+            decimals: 6,
+            image: 'https://cryptologos.cc/logos/tether-usdt-logo.png'
+          }
+        }
+      });
+      if (wasAdded) {
+        showOrderToast('success', 'USDT Added', 'USDT (OMNI Chain) added to MetaMask!');
+        playSound('order_fill');
+      }
+    } catch (err) {
+      console.warn('addUsdtTokenToWallet rejected:', err);
+    }
+  }
+}
+
+function fillUserMetaMaskAddress() {
+  if (window.ethereum && window.ethereum.selectedAddress) {
+    const input = document.getElementById('weexWithdrawAddressInput');
+    if (input) {
+      input.value = window.ethereum.selectedAddress;
+      input.dispatchEvent(new Event('input'));
+      showOrderToast('success', 'Address Filled', `MetaMask address ${window.ethereum.selectedAddress.slice(0, 6)}...${window.ethereum.selectedAddress.slice(-4)} set as recipient.`);
+    }
+  } else {
+    addOmniNetworkToWallet();
   }
 }
 
@@ -11303,6 +11388,8 @@ window.simulateLiveDepositInflow = simulateLiveDepositInflow;
 window.processLiveDepositInflow = simulateLiveDepositInflow;
 window.addOmniNetworkToWallet = addOmniNetworkToWallet;
 window.addOmniTokenToWallet = addOmniTokenToWallet;
+window.addUsdtTokenToWallet = addUsdtTokenToWallet;
+window.fillUserMetaMaskAddress = fillUserMetaMaskAddress;
 window.copyOmniContractAddress = copyOmniContractAddress;
 window.loadWeexDepositRecords = loadWeexDepositRecords;
 

@@ -596,6 +596,12 @@
         <span id="walletAddressDisplay">0x7a25...88B1</span>
       </button>
 
+      <!-- Connect OMNI Network to MetaMask Button -->
+      <button class="btn" id="btnHeaderConnectOmniNetwork" onclick="addOmniNetworkToWallet()" style="background:rgba(56,189,248,0.18); border:1px solid rgba(56,189,248,0.45); color:#38bdf8; font-size:11.5px; font-weight:700; padding:6px 12px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:all 0.2s ease;" title="Connect MetaMask and Switch to OMNI Network Mainnet">
+        <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:16px;">hub</span>
+        <span id="headerOmniNetBtnText">Connect OMNI Network</span>
+      </button>
+
       <div class="gcp-badge-btn" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #d8b4fe;" title="Google Cloud Vertex AI Omni 3.8 Flash Active">
         <span class="live-pulse-dot" style="background:#a855f7; box-shadow: 0 0 8px #a855f7;"></span>
         <span><svg class="gemini-sparkle-mini" width="13" height="13" viewBox="0 0 24 24" style="vertical-align:middle; margin-right:3px;"><use href="#gemini-sparkle-symbol"/></svg>OMNI 3.8 FLASH</span>
@@ -2569,6 +2575,41 @@
     <!-- PANE 1: ON-CHAIN WITHDRAWAL -->
     <div id="paneWeexWithdrawOnChain" class="weex-flow-split">
       <div class="weex-card-box">
+        <!-- MetaMask & OMNI Network Web3 Integration Assistant Card -->
+        <div class="weex-card-box" style="margin-bottom:18px; padding:16px; background:radial-gradient(ellipse at top left, rgba(56,189,248,0.12), rgba(15,23,42,0.85)); border:1px solid rgba(56,189,248,0.35); box-shadow:0 4px 24px rgba(56,189,248,0.08); border-radius:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <strong style="color:#38bdf8; font-size:13.5px; display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined gemini-symbol gemini-grad-cyan" style="font-size:18px;">hub</span> MetaMask Web3 Network & Asset Integration
+            </strong>
+            <span class="badge" id="metaMaskStatusBadge" style="background:rgba(56,189,248,0.18); color:#38bdf8; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:700; border:1px solid rgba(56,189,248,0.3); display:inline-flex; align-items:center; gap:5px;">
+              <span class="live-pulse-dot" style="width:6px; height:6px; background:#38bdf8; border-radius:50%; display:inline-block;"></span> OMNI Chain ID: 39821
+            </span>
+          </div>
+          <p style="font-size:11.5px; color:var(--text-secondary); margin-bottom:12px; line-height:1.5;">
+            Connect your self-custody MetaMask wallet directly in Chrome to add the <strong>OMNI Network Mainnet</strong> and track native <strong>$OMNI</strong> and <strong>USDT</strong> collateral.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:8px; font-size:11px; margin-bottom:14px; background:rgba(15,23,42,0.6); padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+            <div><span style="color:var(--text-muted);">Network:</span> <span class="text-cyan font-mono" style="font-weight:700;">OMNI Network Mainnet</span></div>
+            <div><span style="color:var(--text-muted);">RPC URL:</span> <span class="font-mono text-cyan" style="word-break:break-all;">rpc.omni-network-39821.web.app</span></div>
+            <div><span style="color:var(--text-muted);">$OMNI Token:</span> <span class="font-mono text-gold" style="word-break:break-all;">0x638A...1B44</span></div>
+            <div><span style="color:var(--text-muted);">USDT Token:</span> <span class="font-mono text-green" style="word-break:break-all;">0x3892...7421</span></div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn" id="btnWithdrawConnectOmni" onclick="addOmniNetworkToWallet()" style="flex:1; min-width:170px; padding:8px 14px; border-radius:8px; background:linear-gradient(135deg, #38bdf8, #0284c7); color:#070b14; font-size:12px; font-weight:800; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 0 16px rgba(56,189,248,0.35);">
+              <span class="material-symbols-outlined" style="font-size:16px;">add_link</span> Connect & Switch to OMNI Network
+            </button>
+            <button class="btn" id="btnWithdrawImportOmni" onclick="addOmniTokenToWallet()" style="flex:1; min-width:145px; padding:8px 12px; border-radius:8px; background:rgba(168,85,247,0.22); color:#c084fc; border:1px solid rgba(168,85,247,0.45); font-size:11.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">token</span> Import $OMNI Token
+            </button>
+            <button class="btn" id="btnWithdrawImportUsdt" onclick="addUsdtTokenToWallet()" style="flex:1; min-width:145px; padding:8px 12px; border-radius:8px; background:rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4); font-size:11.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:16px;">paid</span> Import USDT Token
+            </button>
+            <button class="btn" id="btnWithdrawFillAddress" onclick="fillUserMetaMaskAddress()" style="padding:8px 12px; border-radius:8px; background:rgba(255,255,255,0.08); color:#e2e8f0; border:1px solid rgba(255,255,255,0.15); font-size:11.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:5px;" title="Set connected MetaMask address as withdrawal recipient">
+              <span class="material-symbols-outlined" style="font-size:15px;">account_balance_wallet</span> Fill My Address
+            </button>
+          </div>
+        </div>
+
         <!-- Coin -->
         <div class="weex-input-field-group">
           <div class="weex-input-field-label">1. Select Coin to Withdraw</div>
